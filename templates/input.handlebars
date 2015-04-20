@@ -1,0 +1,9 @@
+    <div id="maininput">
+        {{#if this.inputerror}}
+        <span class="error">Your inputs are wrong!</span>
+        {{/if}}
+        <p><label>Your Summoner Name: </label><input type="text" id="summonerName" value="{{prename}}" name="summonerName" /></p>
+        <p><label>Your Region: </label><input type="text" id="region" value="{{preregion}}" name="region" /></p>
+        <p><input type="checkbox" id="rememberme" >Remember me</p>
+        <button class="clickable button" onclick="eventAgg.trigger('input:getTeam')" value="Match me with retards!" >Match me with retards!</button>
+    </div>

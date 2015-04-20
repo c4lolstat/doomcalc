@@ -1,0 +1,128 @@
+<!--<!DOCTYPE html>-->
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" type="image/png" href="images/c4_favicon.jpg">
+
+    <!-- Don't change the order of the these js files below!!-->
+    <script type="text/javascript" src="resources/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="resources/underscore-min.js"></script>
+    <script type="text/javascript" src="resources/backbone-min.js"></script>
+    <script type="text/javascript" src="resources/handlebars-v3.0.0.js"></script>
+    <script type="text/javascript" src="resources/jquery.cookie.js"></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="compiled/input.tpl.js"></script>
+    <script src="compiled/doom.tpl.js"></script>
+    <script src="compiled/error.tpl.js"></script>
+
+    <script type="text/javascript" src="views/InputView.js"></script>
+    <script type="text/javascript" src="views/DoomView.js"></script>
+    <script type="text/javascript" src="views/ErrorView.js"></script>
+
+    <script type="text/javascript" src="models/SummonerModel.js"></script>
+    <script type="text/javascript" src="models/DoomModel.js"></script>
+    <script type="text/javascript" src="models/TeamModel.js"></script>
+
+    <script type="text/javascript" src="helpers/RequestLimiter.js"></script>
+    <script type="text/javascript" src="helpers/Properties.js"></script>
+    <script type="text/javascript" src="helpers/Router.js"></script>
+    <script type="text/javascript" src="helpers/Colorize.js"></script>
+    <script type="text/javascript" src="helpers/IsJson.js"></script>
+
+    <title>How doomed are you?</title>
+
+</head>
+<body>
+<div id="topbar">Unoffical League of Legends application of <span class="red">How doomed are you</span> <i>by C4</i>
+</div>
+<div id="loading" style="display: none"><span>Your DOOM is calculating, please wait.</span><br/> <img src="images/spinner.gif" style="width:100px; height:100px;padding-left: 80px" /></div>
+<div id="content"></div>
+<script type="text/javascript">
+
+    //https://euw.api.pvp.net/observer-mode/rest/featured?api_key=b0e2d67c-bb60-45e1-bb25-90806016c163 featured games for test.
+    //https://euw.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/34237034?api_key=b0e2d67c-bb60-45e1-bb25-90806016c163 spectate
+    //handlebars templates/input.handlebars -f compiled/input.tpl.js
+
+    var eventAgg;
+    var doomModel;
+    var watchDogTime=20000;
+
+    var eventAggregator = _.extend({}, Backbone.Events);
+    eventAgg=eventAggregator;
+    doomModel = new DoomModel({eventAgg: eventAggregator});
+
+    $(document).ready(function () {
+
+        eventAggregator.on('build:readyforteam', function () {
+            $('#loading').show();
+            $('#content').hide();
+            setTimeout(watchDog,watchDogTime);
+            setTimeout(function () {
+                doomModel.getCurrentGameData();
+            }, getTimeOut());
+        });
+
+        eventAggregator.on('doom:calculated', function () {
+            $('#loading').hide();
+            $('#content').show();
+            router.navigate('doom', {trigger: true});
+        });
+
+        eventAggregator.on('render:afterdoom',function(){
+            doomModel.set('doomRendered',true);
+            var color=colorize(doomModel.get('allyDoomPercentage'));
+            $('#judge').css('background', color);
+        });
+
+        eventAggregator.on('input:getTeam',function(){
+            doomModel.getInputs();
+        });
+
+        eventAggregator.on('build:inputsuccess',function(){
+            setTimeout(function () {
+                doomModel.getSummonerId();
+            }, getTimeOut());
+        });
+
+        eventAggregator.on('build:inputerror',function(){
+            Backbone.history.loadUrl(Backbone.history.fragment);
+        });
+
+        eventAggregator.on('build:teamsuccess',function(){
+            doomModel.startBuild();
+        });
+
+        eventAggregator.on('build:teamsready',function(){
+            doomModel.calculateDoom();
+        });
+
+        eventAggregator.on('doom:again',function(){
+            router.navigate('teams', {trigger: true});
+        });
+
+        eventAggregator.on('error:gohome',function(){
+            router.navigate('inputs', {trigger: true});
+        });
+
+        eventAggregator.on('error:api',function(){
+            $('#loading').hide();
+            $('#content').show();
+            router.navigate('error', {trigger: true});
+        });
+
+        var router = new DocumentRouter(doomModel,eventAggregator);
+        Backbone.history.start();
+        router.navigate('inputs', {trigger: true});
+
+    });
+    function watchDog(){
+        if (!doomModel.get('doomRendered')) eventAgg.trigger('error:api');
+    };
+</script>
+
+</body>
+</html>
