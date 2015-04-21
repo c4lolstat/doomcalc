@@ -1,0 +1,91 @@
+    <h3>Your faith is sealed. Prepare for your DOOM... </h3>
+    <br/>
+    <div id="judge" >
+        <h1>{{this.doomMessage}} (<span id="score">{{this.allyDoomPercentage}}</span>)</h1>
+    </div>
+    <br/>
+    <h2>Team overview</h2>
+    <br/>
+    <div id="teams">
+        <table>
+            <thead>
+            <td></td>
+            <td>Ally</td>
+            <td>Enemy</td>
+            </thead>
+            <tr>
+                <td>DF</td>
+                <td>{{this.teams.0.DF}}</td>
+                <td>{{this.teams.1.DF}}</td>
+            </tr>
+            <tr>
+                <td>KDA</td>
+                <td>{{this.teams.0.KDA}}</td>
+                <td>{{this.teams.1.KDA}}</td>
+            </tr>
+            <tr>
+                <td>Winrate</td>
+                <td>{{this.teams.0.winrate}}</td>
+                <td>{{this.teams.1.winrate}}</td>
+            </tr>
+            <tr>
+                <td>Gold</td>
+                <td>{{this.teams.0.gold}}</td>
+                <td>{{this.teams.1.gold}}</td>
+            </tr>
+            <tr>
+                <td>CS</td>
+                <td>{{this.teams.0.cs}}</td>
+                <td>{{this.teams.1.cs}}</td>
+            </tr>
+            <tr>
+                <td>Turret</td>
+                <td>{{this.teams.0.turret}}</td>
+                <td>{{this.teams.1.turret}}</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{{this.teams.0.total}}</td>
+                <td>{{this.teams.1.total}}</td>
+            </tr>
+            <tr>
+                <td>Doom</td>
+                <td>{{this.teams.0.doom}}</td>
+                <td>{{this.teams.1.doom}}</td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <h2>Players overview</h2>
+    <br/>
+    <div id="players">
+        <table>
+            {{#each this.teams}}
+                <thead>
+                <td>Player</td>
+                <td>Win</td>
+                <td>Lost</td>
+                <td>Kill</td>
+                <td>Assist</td>
+                <td>Death</td>
+                <td>Gold</td>
+                <td>Creepscore</td>
+                <td>Turret</td>
+                </thead>
+                {{#each this.members}}
+                    <tr>
+                        <td>{{this.name}} as <b>{{this.champion}}</b></td>
+                        <td>{{this.win}}</td>
+                        <td>{{this.lost}}</td>
+                        <td>{{this.kill}}</td>
+                        <td>{{this.assist}}</td>
+                        <td>{{this.death}}</td>
+                        <td>{{this.gold}}</td>
+                        <td>{{this.cs}}</td>
+                        <td>{{this.turret}}</td>
+                    </tr>
+                {{/each}}
+            {{/each}}
+        </table>
+    </div>
+    <button class="clickable button" onclick="eventAgg.trigger('build:readyforteam')">Match me with retards! Again...</button>
