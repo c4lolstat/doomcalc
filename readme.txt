@@ -10,7 +10,7 @@ To run:
 2. install it
 3. start commandline
 4. go to application folder
-5. run: Doom.bat
+5. run: node server.js
 6. open browser
 7. go to localhost:3000/doom
 8. Welcome in elohell...
