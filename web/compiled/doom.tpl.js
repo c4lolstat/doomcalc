@@ -3,7 +3,7 @@
 templates['doom'] = template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "                <thead>\r\n                <td>Player</td>\r\n                <td>Win</td>\r\n                <td>Lost</td>\r\n                <td>Kill</td>\r\n                <td>Assist</td>\r\n                <td>Death</td>\r\n                <td>Gold</td>\r\n                <td>Creepscore</td>\r\n                <td>Turret</td>\r\n                </thead>\r\n"
+  return "                <thead>\r\n                <td>Player</td>\r\n                <td>Win</td>\r\n                <td>Lost</td>\r\n                <td>Kill</td>\r\n                <td>Death</td>\r\n                <td>Assist</td>\r\n                <td>Gold</td>\r\n                <td>Creepscore</td>\r\n                <td>Turret</td>\r\n                </thead>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.members : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"2":function(depth0,helpers,partials,data) {
     var alias1=this.lambda, alias2=this.escapeExpression;
@@ -19,9 +19,9 @@ templates['doom'] = template({"1":function(depth0,helpers,partials,data) {
     + "</td>\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.kill : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.assist : depth0), depth0))
-    + "</td>\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.death : depth0), depth0))
+    + "</td>\r\n                        <td>"
+    + alias2(alias1((depth0 != null ? depth0.assist : depth0), depth0))
     + "</td>\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.gold : depth0), depth0))
     + "</td>\r\n                        <td>"
