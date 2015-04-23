@@ -8,7 +8,7 @@ var DoomView = Backbone.View.extend({
     id: 'doomview',
     className: 'doomview',
 
-    template:Handlebars.templates.doom,
+    template:Handlebars.templates['web/templates/doom.handlebars'],
 
     render: function () {
         var context = this.model.getTeamsAsObject();

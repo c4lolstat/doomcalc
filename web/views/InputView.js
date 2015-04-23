@@ -8,7 +8,7 @@ var InputView = Backbone.View.extend({
     id: 'inputview',
     className: 'inputview',
 
-    template:Handlebars.templates.input,
+    template:Handlebars.templates['web/templates/input.handlebars'],
 
     render: function () {
         var context = {prename:this.model.get('name'),preregion:this.model.get('region'),inputerror:this.model.get('inputError')};

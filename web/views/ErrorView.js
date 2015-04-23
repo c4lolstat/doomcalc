@@ -8,7 +8,7 @@ var ErrorView = Backbone.View.extend({
     id: 'errorview',
     className: 'errorview',
 
-    template:Handlebars.templates.error,
+    template:Handlebars.templates['web/templates/error.handlebars'],
 
     render: function () {
         this.$el.append(this.template());

@@ -1,2 +1,12 @@
-.idea
-*.iml
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!web/
+!readme.txt
+!server
+!package.json
+!bower.json
+!Gruntfile.js
+

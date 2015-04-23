@@ -1,6 +1,7 @@
-(function() {
-  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['doom'] = template({"1":function(depth0,helpers,partials,data) {
+this["Handlebars"] = this["Handlebars"] || {};
+this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};
+
+this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                <thead>\r\n                <td>Player</td>\r\n                <td>Win</td>\r\n                <td>Lost</td>\r\n                <td>Kill</td>\r\n                <td>Death</td>\r\n                <td>Assist</td>\r\n                <td>Gold</td>\r\n                <td>Creepscore</td>\r\n                <td>Turret</td>\r\n                </thead>\r\n"
@@ -72,4 +73,3 @@ templates['doom'] = template({"1":function(depth0,helpers,partials,data) {
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.teams : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "        </table>\r\n    </div>\r\n    <button class=\"clickable button\" onclick=\"eventAgg.trigger('build:readyforteam')\">Match me with retards! Again...</button>";
 },"useData":true});
-})();
