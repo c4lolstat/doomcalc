@@ -4,8 +4,9 @@
 # But not these files...
 !.gitignore
 !web/
+!web/**/*
 !readme.txt
-!server
+!server.js
 !package.json
 !bower.json
 !Gruntfile.js
