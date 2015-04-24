@@ -75,6 +75,7 @@
             doomModel.set('doomRendered', true);
             var color = colorize(doomModel.get('allyDoomPercentage'));
             $('#judge').css('background', color);
+            $('#judge').css('width', '750px');
         });
 
         eventAggregator.on('input:getTeam', function () {

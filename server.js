@@ -28,16 +28,11 @@ var options = {
 
 app.use(express.static(doom, options));
 
-
 app.get('/', function (req, res) {
-    res.send('This software  isn’t endorsed by Riot Gamesand doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managingLeague of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.League of Legends © Riot Games, Inc.');
-});
-
-app.get('/doom', function (req, res) {
     res.sendFile(path.join(doom, 'index.html'));
 });
 
-app.get('/doomtestpage', function (req, res) {
+app.get('/testpage', function (req, res) {
     res.sendFile(path.join(doom, 'Runner.html'));
 });
 
