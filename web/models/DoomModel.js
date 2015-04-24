@@ -164,17 +164,17 @@ var DoomModel = Backbone.Model.extend({
         self.set('allyDoomPercentage', enemy - ally);
         self.set('enemyDoomPercentage', ally - enemy);
 
-        if (self.get('allyDoomPercentage') > 25) self.set('doomMessage', 'Your doom lvl is over 9000!');
-        if (self.get('allyDoomPercentage') <= 25 && self.get('allyDoomPercentage') > 20) self.set('doomMessage', 'Did you sacrificed a kitty today?');
-        if (self.get('allyDoomPercentage') <= 20 && self.get('allyDoomPercentage') > 15) self.set('doomMessage', 'Surrend @ 20...');
-        if (self.get('allyDoomPercentage') <= 15 && self.get('allyDoomPercentage') > 10) self.set('doomMessage', 'GG');
-        if (self.get('allyDoomPercentage') <= 10 && self.get('allyDoomPercentage') > 5) self.set('doomMessage', 'You can forget your food in the microwave.');
-        if (self.get('allyDoomPercentage') <= 5 && self.get('allyDoomPercentage') > -5) self.set('doomMessage', 'You have to bait them and outsmart them.');
-        if (self.get('allyDoomPercentage') <= -5 && self.get('allyDoomPercentage') > -10) self.set('doomMessage', 'OK');
-        if (self.get('allyDoomPercentage') <= -10 && self.get('allyDoomPercentage') > -15) self.set('doomMessage', 'Tons of damage!');
-        if (self.get('allyDoomPercentage') <= -15 && self.get('allyDoomPercentage') > -20) self.set('doomMessage', 'You see hero, you kill hero!');
-        if (self.get('allyDoomPercentage') <= -20 && self.get('allyDoomPercentage') > -25) self.set('doomMessage', 'If you want to play with me, you better be sure you know the game.');
-        if (self.get('allyDoomPercentage') <= -25) self.set('doomMessage', 'Blessed by the light!');
+        if (self.get('allyDoomPercentage') > 25) self.set('doomMessage', '<%_level0%>');
+        if (self.get('allyDoomPercentage') <= 25 && self.get('allyDoomPercentage') > 20) self.set('doomMessage', '<%_level1%>');
+        if (self.get('allyDoomPercentage') <= 20 && self.get('allyDoomPercentage') > 15) self.set('doomMessage', '<%_level2%>');
+        if (self.get('allyDoomPercentage') <= 15 && self.get('allyDoomPercentage') > 10) self.set('doomMessage', '<%_level3%>');
+        if (self.get('allyDoomPercentage') <= 10 && self.get('allyDoomPercentage') > 5) self.set('doomMessage', '<%_level%4>');
+        if (self.get('allyDoomPercentage') <= 5 && self.get('allyDoomPercentage') > -5) self.set('doomMessage', '<%_level%5>');
+        if (self.get('allyDoomPercentage') <= -5 && self.get('allyDoomPercentage') > -10) self.set('doomMessage', '<%_level6%>');
+        if (self.get('allyDoomPercentage') <= -10 && self.get('allyDoomPercentage') > -15) self.set('doomMessage', '<%_level7%>');
+        if (self.get('allyDoomPercentage') <= -15 && self.get('allyDoomPercentage') > -20) self.set('doomMessage', '<%_level8%>');
+        if (self.get('allyDoomPercentage') <= -20 && self.get('allyDoomPercentage') > -25) self.set('doomMessage', '<%_level9%>');
+        if (self.get('allyDoomPercentage') <= -25) self.set('doomMessage', '<%_level10%>');
 
         self.set('started', false);
         self.fireEvent('doom:calculated');

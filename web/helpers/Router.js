@@ -14,13 +14,13 @@ var DocumentRouter = Backbone.Router.extend({
         this.eventAgg = eventAgg;
     },
     inputs: function () {
-        $("#content").empty().append(new InputView({model: this.model}).render().el);
+        $("#container").empty().append(new InputView({model: this.model}).render().el);
     },
     doom: function () {
-        $("#content").empty().append(new DoomView({model: this.model}).render().el);
+        $("#container").empty().append(new DoomView({model: this.model}).render().el);
         this.eventAgg.trigger('render:afterdoom');
     },
     error: function () {
-        $("#content").empty().append(new ErrorView({model: this.model}).render().el);
+        $("#container").empty().append(new ErrorView({model: this.model}).render().el);
     }
 });

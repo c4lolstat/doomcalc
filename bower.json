@@ -19,6 +19,7 @@
     "handlebars": "3.0.0",
     "jquery-cookie": "~1.4.1",
     "jquery": "2.0.0",
-    "jasmine": "2.2.1"
+    "jasmine": "2.2.1",
+    "underi18n": "~1.0.0"
   }
 }

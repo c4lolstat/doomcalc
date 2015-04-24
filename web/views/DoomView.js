@@ -8,11 +8,25 @@ var DoomView = Backbone.View.extend({
     id: 'doomview',
     className: 'doomview',
 
-    template:Handlebars.templates['web/templates/doom.handlebars'],
+    template: Handlebars.templates['web/templates/doom.handlebars'],
+    header: Handlebars.templates['web/templates/header.handlebars'],
+
+    renderHeader: function () {
+        var content = this.header();
+        content = (underi18n.template(content, dictionary.get(lang)));
+        this.$el.append(content);
+        return this;
+    },
+
+    renderDoom: function () {
+        var context = this.model.getTeamsAsObject();
+        var content = this.template(context);
+        content = underi18n.template(content, dictionary.get(lang));
+        this.$el.append(content);
+    },
 
     render: function () {
-        var context = this.model.getTeamsAsObject();
-        this.$el.append(this.template(context));
+        this.renderHeader().renderDoom();
         return this;
     }
 });

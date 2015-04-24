@@ -11,10 +11,12 @@
     <script type="text/javascript" src="resources/backbone.js"></script>
     <script type="text/javascript" src="resources/handlebars.js"></script>
     <script type="text/javascript" src="resources/jquery.cookie.js"></script>
+    <script type="text/javascript" src="resources/underi18n.js"></script>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="compiled/header.tpl.js"></script>
     <script src="compiled/input.tpl.js"></script>
     <script src="compiled/doom.tpl.js"></script>
     <script src="compiled/error.tpl.js"></script>
@@ -37,10 +39,6 @@
 
 </head>
 <body>
-<div id="topbar">Unoffical League of Legends application of <span class="red">How doomed are you</span> <i>by C4</i>
-</div>
-<div id="loading" style="display: none"><span>Your DOOM is calculating, please wait.</span><br/> <img src="images/spinner.gif" style="width:100px; height:100px;padding-left: 80px" /></div>
-<div id="content"></div>
 <script type="text/javascript">
 
     //https://euw.api.pvp.net/observer-mode/rest/featured?api_key=b0e2d67c-bb60-45e1-bb25-90806016c163 featured games for test.
@@ -49,10 +47,11 @@
 
     var eventAgg;
     var doomModel;
-    var watchDogTime=20000;
-
+    var watchDogTime = 20000;
+    var dictionary = new Map();
+    var lang=lang||'en';
     var eventAggregator = _.extend({}, Backbone.Events);
-    eventAgg=eventAggregator;
+    eventAgg = eventAggregator;
     doomModel = new DoomModel({eventAgg: eventAggregator});
 
     $(document).ready(function () {
@@ -60,7 +59,7 @@
         eventAggregator.on('build:readyforteam', function () {
             $('#loading').show();
             $('#content').hide();
-            setTimeout(watchDog,watchDogTime);
+            setTimeout(watchDog, watchDogTime);
             setTimeout(function () {
                 doomModel.getCurrentGameData();
             }, getTimeOut());
@@ -72,57 +71,71 @@
             router.navigate('doom', {trigger: true});
         });
 
-        eventAggregator.on('render:afterdoom',function(){
-            doomModel.set('doomRendered',true);
-            var color=colorize(doomModel.get('allyDoomPercentage'));
+        eventAggregator.on('render:afterdoom', function () {
+            doomModel.set('doomRendered', true);
+            var color = colorize(doomModel.get('allyDoomPercentage'));
             $('#judge').css('background', color);
         });
 
-        eventAggregator.on('input:getTeam',function(){
+        eventAggregator.on('input:getTeam', function () {
             doomModel.getInputs();
         });
 
-        eventAggregator.on('build:inputsuccess',function(){
+        eventAggregator.on('build:inputsuccess', function () {
             setTimeout(function () {
                 doomModel.getSummonerId();
             }, getTimeOut());
         });
 
-        eventAggregator.on('build:inputerror',function(){
+        eventAggregator.on('build:inputerror', function () {
             Backbone.history.loadUrl(Backbone.history.fragment);
         });
 
-        eventAggregator.on('build:teamsuccess',function(){
+        eventAggregator.on('build:teamsuccess', function () {
             doomModel.startBuild();
         });
 
-        eventAggregator.on('build:teamsready',function(){
+        eventAggregator.on('build:teamsready', function () {
             doomModel.calculateDoom();
         });
 
-        eventAggregator.on('doom:again',function(){
+        eventAggregator.on('doom:again', function () {
             router.navigate('teams', {trigger: true});
         });
 
-        eventAggregator.on('error:gohome',function(){
+        eventAggregator.on('error:gohome', function () {
             router.navigate('inputs', {trigger: true});
         });
 
-        eventAggregator.on('error:api',function(){
+        eventAggregator.on('error:api', function () {
             $('#loading').hide();
             $('#content').show();
             router.navigate('error', {trigger: true});
         });
 
-        var router = new DocumentRouter(doomModel,eventAggregator);
-        Backbone.history.start();
-        router.navigate('inputs', {trigger: true});
+        eventAggregator.on('language:set', function () {
+            Backbone.history.loadUrl(Backbone.history.fragment);
+        });
+
+        var router = new DocumentRouter(doomModel, eventAggregator);
+
+        $.when( $.ajax(currentLocation.origin + "/locale/en"), $.ajax(currentLocation.origin + "/locale/ru")).done(function (lang1,lang2) {
+            dictionary.set('en', underi18n.MessageFactory(lang1[0]));
+            dictionary.set('ru', underi18n.MessageFactory(lang2[0]));
+            Backbone.history.start();
+            router.navigate('inputs', {trigger: true});
+        });
 
     });
-    function watchDog(){
+    function setLanguage(lang){
+       this.lang = lang;
+        eventAgg.trigger('language:set');
+    };
+
+    function watchDog() {
         if (!doomModel.get('doomRendered')) eventAgg.trigger('error:api');
     };
 </script>
-
+<div id="container"></div>
 </body>
 </html>

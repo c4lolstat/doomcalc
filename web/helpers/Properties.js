@@ -9,9 +9,9 @@ var apiKey = "b0e2d67c-bb60-45e1-bb25-90806016c163";
 var nullStat = '{"summonerId":0,"modifyDate":0,"champions":[{"id":0,"stats":{"totalSessionsPlayed":0,"totalSessionsLost":0,"totalSessionsWon":0,"totalChampionKills":0,"totalDamageDealt":0,"totalDamageTaken":0,"mostChampionKillsPerSession":0,"totalMinionKills":0,"totalDoubleKills":0,"totalTripleKills":0,"totalQuadraKills":0,"totalPentaKills":0,"totalUnrealKills":0,"totalDeathsPerSession":0,"totalGoldEarned":0,"mostSpellsCast":0,"totalTurretsKilled":0,"totalPhysicalDamageDealt":0,"totalMagicDamageDealt":0,"totalFirstBlood":0,"totalAssists":0,"maxChampionsKilled":0,"maxNumDeaths":0}}]}';
 var preName="Your Summoner Name";
 var preRegion="Your Region";
-var champList={};
 var self=this;
 var currentLocation = window.location;
+
 var response= $.get(currentLocation.origin + "/champlist")
     .done(
     function (data) {

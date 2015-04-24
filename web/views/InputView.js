@@ -8,11 +8,30 @@ var InputView = Backbone.View.extend({
     id: 'inputview',
     className: 'inputview',
 
-    template:Handlebars.templates['web/templates/input.handlebars'],
+    template: Handlebars.templates['web/templates/input.handlebars'],
+    header: Handlebars.templates['web/templates/header.handlebars'],
+
+    renderHeader: function () {
+        var content = this.header();
+        content = (underi18n.template(content, dictionary.get(lang)));
+        this.$el.append(content);
+        return this;
+    },
+
+    renderInput: function () {
+        var context = {
+            prename: this.model.get('name'),
+            preregion: this.model.get('region'),
+            inputerror: this.model.get('inputError')
+        };
+        var content = this.template(context);
+        content = underi18n.template(content, dictionary.get(lang));
+        this.$el.append(content);
+        return this;
+    },
 
     render: function () {
-        var context = {prename:this.model.get('name'),preregion:this.model.get('region'),inputerror:this.model.get('inputError')};
-        this.$el.append(this.template(context));
+        this.renderHeader().renderInput();
         return this;
     }
 });

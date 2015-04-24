@@ -25,6 +25,24 @@
     color: red;
 }
 
+.buttonsmall {
+    background: #000;
+    border: 2px solid #000;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.buttonsmall:hover {
+    border: 2px solid red;
+    color: red;
+}
+
 .hidden {
     display: none;
 }

@@ -9,7 +9,8 @@ module.exports = function (grunt) {
                 files: {
                     "web/compiled/doom.tpl.js": "web/templates/doom.handlebars",
                     "web/compiled/input.tpl.js": "web/templates/input.handlebars",
-                    "web/compiled/error.tpl.js": "web/templates/error.handlebars"
+                    "web/compiled/error.tpl.js": "web/templates/error.handlebars",
+                    "web/compiled/header.tpl.js": "web/templates/header.handlebars"
                 }
             }
         },
@@ -27,7 +28,8 @@ module.exports = function (grunt) {
                     'handlebars.js': 'handlebars/handlebars.js',
                     'jquery.js': 'jquery/jquery.js',
                     'jquery.cookie.js': 'jquery-cookie/jquery.cookie.js',
-                    'underscore.js': 'underscore/underscore.js'
+                    'underscore.js': 'underscore/underscore.js',
+                    'underi18n.js':'underi18n/underi18n.js'
                 }
             },
             tests: {
