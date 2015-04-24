@@ -24,7 +24,7 @@ describe('In doomModel model', function () {
             this.model.calculateDoom();
             expect(this.model.get('allyDoomPercentage')).toEqual(0);
             expect(this.model.get('enemyDoomPercentage')).toEqual(0);
-            expect(this.model.get('doomMessage')).toEqual('You have to bait them and outsmart them.');
+            expect(this.model.get('doomMessage')).toEqual('<%_level%5>');
         });
         it('should calculate DOOM ally positive, enemy negative', function () {
             this.model.set('allyDoom', 6.50);
@@ -32,7 +32,7 @@ describe('In doomModel model', function () {
             this.model.calculateDoom();
             expect(this.model.get('allyDoomPercentage')).toEqual(-13);
             expect(this.model.get('enemyDoomPercentage')).toEqual(13);
-            expect(this.model.get('doomMessage')).toEqual('Tons of damage!');
+            expect(this.model.get('doomMessage')).toEqual('<%_level7%>');
         });
         it('should calculate DOOM ally negative, enemy positive', function () {
             this.model.set('allyDoom', -6.50);
@@ -40,7 +40,7 @@ describe('In doomModel model', function () {
             this.model.calculateDoom();
             expect(this.model.get('allyDoomPercentage')).toEqual(13);
             expect(this.model.get('enemyDoomPercentage')).toEqual(-13);
-            expect(this.model.get('doomMessage')).toEqual('GG');
+            expect(this.model.get('doomMessage')).toEqual('<%_level3%>');
         });
         it('should calculate DOOM both negative', function () {
             this.model.set('allyDoom', -6.50);
@@ -48,7 +48,7 @@ describe('In doomModel model', function () {
             this.model.calculateDoom();
             expect(this.model.get('allyDoomPercentage')).toEqual(0);
             expect(this.model.get('enemyDoomPercentage')).toEqual(0);
-            expect(this.model.get('doomMessage')).toEqual('You have to bait them and outsmart them.');
+            expect(this.model.get('doomMessage')).toEqual('<%_level%5>');
         });
     });
     describe('getCredentials method', function () {

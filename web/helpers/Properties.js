@@ -11,7 +11,7 @@ var preName="Your Summoner Name";
 var preRegion="Your Region";
 var self=this;
 var currentLocation = window.location;
-
+var champList={};
 var response= $.get(currentLocation.origin + "/champlist")
     .done(
     function (data) {
