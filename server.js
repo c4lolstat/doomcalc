@@ -123,19 +123,6 @@ app.get('/locale/:lang([a-z]+)', function (req, res) {
     var lang = req.params.lang;
     if (lang === 'en') {
         res.sendFile(path.join(doom, 'localization/en.json'));
-       // res.json({
-       //     "test": "See hero, kill hero",
-       //     "title":"How doomed are you?",
-       //     "headerstart":"Unoffical League of Legends application of",
-       //     "headermid":"How doomed are you?",
-       //     "headerend":"by C4",
-       //     "waiting":"Your DOOM is calculating, please wait.",
-       //     "inputerror":"Your inputs are wrong!",
-       //     "name":"Your Summoner Name: ",
-       //     "region":"Your Region: ",
-       //     "remember":"Remember me",
-       //     "inputbutton":"Match me with retards!"
-       // });
     }
     if (lang === 'ru') {
         res.sendFile(path.join(doom, 'localization/ru.json'));
