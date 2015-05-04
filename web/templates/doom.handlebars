@@ -63,24 +63,26 @@
         <table>
             {{#each this.teams}}
                 <thead>
-                <td><%_player%></td>
-                <td><%_win%></td>
-                <td><%_lost%></td>
-                <td><%_kill%></td>
-                <td><%_death%></td>
-                <td><%_assist%></td>
-                <td><%_gold%></td>
-                <td><%_cs%></td>
-                <td><%_turret%></td>
+                    <td><%_player%></td>
+                    <td><%_win%></td>
+                    <td><%_lost%></td>
+                    <td><%_kill%></td>
+                    <td><%_death%></td>
+                    <td><%_assist%></td>
+                    <td><%_kda%></td>
+                    <td><%_gold%></td>
+                    <td><%_cs%></td>
+                    <td><%_turret%></td>
                 </thead>
                 {{#each this.members}}
-                    <tr>
+                    <tr class="data">
                         <td>{{this.name}} - <b>{{this.champion}}</b></td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>
                         <td>{{this.kill}}</td>
                         <td>{{this.death}}</td>
                         <td>{{this.assist}}</td>
+                        <td>{{this.KDA}}</td>
                         <td>{{this.gold}}</td>
                         <td>{{this.cs}}</td>
                         <td>{{this.turret}}</td>

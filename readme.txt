@@ -1,4 +1,4 @@
-﻿Super awsome stuff for League of Legends team stats. Created by C4.
+Super awsome stuff for League of Legends team stats. Created by C4.
 
 This software  isn’t endorsed by Riot Games
 and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing
@@ -12,8 +12,8 @@ To run:
 4. go to application folder
 5. run: node server.js
 6. open browser
-7. go to localhost:3000/doom
-8. Welcome in elohell...
+7. go to localhost:3000
+8. Welcome to elohell...
 
                ,        ,
               /(        )`

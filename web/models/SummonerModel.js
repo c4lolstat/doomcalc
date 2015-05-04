@@ -14,6 +14,7 @@ var SummonerModel = Backbone.Model.extend({
             kill: 0,
             death: 0,
             assist: 0,
+            KDA: '0',
             gold: 0,
             creepscore: 0,
             win: 0,
@@ -32,6 +33,7 @@ var SummonerModel = Backbone.Model.extend({
         obj.kill = this.get('kill');
         obj.death = this.get('death');
         obj.assist = this.get('assist');
+        obj.KDA = this.get('KDA');
         obj.gold = this.get('gold');
         obj.cs = this.get('creepscore');
         obj.win = this.get('win');
@@ -57,6 +59,11 @@ var SummonerModel = Backbone.Model.extend({
                 this.set('death', Math.round(death));
                 var assist = this.get('stats').totalAssists / total;
                 this.set('assist', Math.round(assist));
+                if (death === 0) {
+                    this.set('KDA', ((kill + assist) / 1).toFixed(2));
+                } else {
+                    this.set('KDA', ((kill + assist) / death).toFixed(2));
+                }
                 this.set('win', this.get('stats').totalSessionsWon);
                 this.set('lost', this.get('stats').totalSessionsLost);
                 var gold = this.get('stats').totalGoldEarned / total;

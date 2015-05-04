@@ -4,12 +4,12 @@ this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};
 this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "                <thead>\r\n                <td><%_player%></td>\r\n                <td><%_win%></td>\r\n                <td><%_lost%></td>\r\n                <td><%_kill%></td>\r\n                <td><%_death%></td>\r\n                <td><%_assist%></td>\r\n                <td><%_gold%></td>\r\n                <td><%_cs%></td>\r\n                <td><%_turret%></td>\r\n                </thead>\r\n"
+  return "                <thead>\r\n                    <td><%_player%></td>\r\n                    <td><%_win%></td>\r\n                    <td><%_lost%></td>\r\n                    <td><%_kill%></td>\r\n                    <td><%_death%></td>\r\n                    <td><%_assist%></td>\r\n                    <td><%_kda%></td>\r\n                    <td><%_gold%></td>\r\n                    <td><%_cs%></td>\r\n                    <td><%_turret%></td>\r\n                </thead>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.members : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"2":function(depth0,helpers,partials,data) {
     var alias1=this.lambda, alias2=this.escapeExpression;
 
-  return "                    <tr>\r\n                        <td>"
+  return "                    <tr class=\"data\">\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
     + " - <b>"
     + alias2(alias1((depth0 != null ? depth0.champion : depth0), depth0))
@@ -23,6 +23,8 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
     + alias2(alias1((depth0 != null ? depth0.death : depth0), depth0))
     + "</td>\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.assist : depth0), depth0))
+    + "</td>\r\n                        <td>"
+    + alias2(alias1((depth0 != null ? depth0.KDA : depth0), depth0))
     + "</td>\r\n                        <td>"
     + alias2(alias1((depth0 != null ? depth0.gold : depth0), depth0))
     + "</td>\r\n                        <td>"
