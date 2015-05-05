@@ -30,7 +30,7 @@
     <script type="text/javascript" src="models/DoomModel.js"></script>
     <script type="text/javascript" src="models/TeamModel.js"></script>
 
-    <script type="text/javascript" src="helpers/RequestLimiter.js"></script>
+    <!--<script type="text/javascript" src="helpers/RequestLimiter.js"></script>-->
     <script type="text/javascript" src="helpers/Properties.js"></script>
     <script type="text/javascript" src="helpers/Router.js"></script>
     <script type="text/javascript" src="helpers/Colorize.js"></script>
@@ -48,7 +48,7 @@
 
     var eventAgg;
     var doomModel;
-    var watchDogTime = 20000;
+    var watchDogTime = 60000;
     var dictionary = new Map();
     var lang = lang || 'en';
     var eventAggregator = _.extend({}, Backbone.Events);
@@ -68,9 +68,7 @@
             $('#loading').show();
             $('#content').hide();
             setTimeout(watchDog, watchDogTime);
-            setTimeout(function () {
-                doomModel.getCurrentGameData();
-            }, getTimeOut());
+            doomModel.getCurrentGameData();
         });
 
         eventAggregator.on('doom:calculated', function () {
@@ -90,9 +88,7 @@
         });
 
         eventAggregator.on('build:inputsuccess', function () {
-            setTimeout(function () {
-                doomModel.getSummonerId();
-            }, getTimeOut());
+            doomModel.getSummonerId();
         });
 
         eventAggregator.on('build:inputerror', function () {
@@ -108,7 +104,7 @@
         });
 
         eventAggregator.on('doom:again', function () {
-            router.navigate('teams', {trigger: true});
+            router.navigate('inputs', {trigger: true});
         });
 
         eventAggregator.on('error:gohome', function () {
@@ -127,14 +123,17 @@
 
         var router = new DocumentRouter(doomModel, eventAggregator);
 
-        $.when($.ajax(currentLocation.origin + "/locale/en"), $.ajax(currentLocation.origin + "/locale/ru"))
+        var en = $.ajax(currentLocation.origin + "/locale/en");
+        var ru = $.ajax(currentLocation.origin + "/locale/ru");
+
+        $.when(en, ru)
                 .done(function (lang1, lang2) {
                     dictionary.set('en', underi18n.MessageFactory(lang1[0]));
                     dictionary.set('ru', underi18n.MessageFactory(lang2[0]));
                     Backbone.history.start();
                     router.navigate('inputs', {trigger: true});
                 }).fail(
-                function(){
+                function () {
                     logger.error('cannot load language files!');
                 }
         );
