@@ -1,7 +1,9 @@
 {
   "name": "Server",
   "version": "1.0.0",
+  "private":true,
   "devDependencies": {
+    "express":"4.12.3",
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.0",
     "grunt-contrib-handlebars": "^0.10.2"
