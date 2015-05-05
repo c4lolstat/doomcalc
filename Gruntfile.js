@@ -29,7 +29,8 @@ module.exports = function (grunt) {
                     'jquery.js': 'jquery/jquery.js',
                     'jquery.cookie.js': 'jquery-cookie/jquery.cookie.js',
                     'underscore.js': 'underscore/underscore.js',
-                    'underi18n.js':'underi18n/underi18n.js'
+                    'underi18n.js':'underi18n/underi18n.js',
+                    'woodman.js':'woodman/dist/woodman.js'
                 }
             },
             tests: {

@@ -26,6 +26,30 @@ var options = {
     }
 };
 
+var requestLimit = 10;
+var timeLimit = 10000;
+var cntrequest = 0;
+var requestTimes = [];
+
+function getTimeOut() {
+    var timeout = 0;
+    if (cntrequest < requestLimit) {
+        cntrequest++;
+        requestTimes.push(new Date().getTime());
+    } else {
+        var interval = new Date().getTime() - requestTimes[0];
+        if (interval > timeLimit) {
+            requestTimes.shift();
+            requestTimes.push(new Date().getTime());
+        } else {
+            timeout = timeLimit - interval;
+            requestTimes.shift();
+            requestTimes.push(new Date().getTime() + timeout);
+        }
+    }
+    return timeout;
+};
+
 app.use(express.static(doom, options));
 
 app.get('/', function (req, res) {
@@ -37,64 +61,69 @@ app.get('/testpage', function (req, res) {
 });
 
 app.get('/summonerid/:name/:region([a-z]+)', function (req, res) {
-    var name = req.params.name;
-    var region = req.params.region;
+    setTimeout(function () {
+        var name = req.params.name;
+        var region = req.params.region;
 
-    var response = '';
-    var url = "https://" + region + host + "/api/lol/" + region + "/" + summonerVersion + "/summoner/by-name/" + name + "?api_key=" + apiKey;
+        var response = '';
+        var url = "https://" + region + host + "/api/lol/" + region + "/" + summonerVersion + "/summoner/by-name/" + name + "?api_key=" + apiKey;
 
-    https.get(url, function (rs) {
-        rs.on('data', function (chunk) {
-            response += chunk;
+        https.get(url, function (rs) {
+            rs.on('data', function (chunk) {
+                response += chunk;
+            });
+            rs.on('error', function (e) {
+                console.error(e);
+            });
+            rs.on('end', function () {
+                res.send(response);
+            });
         });
-        rs.on('error', function (e) {
-            console.error(e);
-        });
-        rs.on('end', function () {
-            res.send(response);
-        });
-    });
-
+    }, getTimeOut());
 });
 
 app.get('/team/:id([0-9]+)/:region([a-z]+)', function (req, res) {
-    var id = req.params.id;
-    var region = req.params.region;
+    setTimeout(function () {
+        var id = req.params.id;
+        var region = req.params.region;
 
-    var response = '';
-    var url = "https://" + region + host + "/observer-mode/rest/consumer/getSpectatorGameInfo/" + region.toUpperCase() + "1/" + id + "?api_key=" + apiKey;
+        var response = '';
+        var url = "https://" + region + host + "/observer-mode/rest/consumer/getSpectatorGameInfo/" + region.toUpperCase() + "1/" + id + "?api_key=" + apiKey;
 
-    https.get(url, function (rs) {
-        rs.on('data', function (chunk) {
-            response += chunk;
+        https.get(url, function (rs) {
+            rs.on('data', function (chunk) {
+                response += chunk;
+            });
+            rs.on('error', function (e) {
+                console.error(e);
+            });
+            rs.on('end', function () {
+                res.send(response);
+            });
         });
-        rs.on('error', function (e) {
-            console.error(e);
-        });
-        rs.on('end', function () {
-            res.send(response);
-        });
-    });
+    }, getTimeOut());
 });
 
 app.get('/rankedstat/:id([0-9]+)/:region([a-z]+)', function (req, res) {
-    var id = req.params.id;
-    var region = req.params.region;
+    setTimeout(function () {
+        var id = req.params.id;
+        var region = req.params.region;
 
-    var response = '';
-    var url = "https://" + region + host + "/api/lol/" + region + "/" + statsVersion + "/stats/by-summoner/" + id + "/ranked?api_key=" + apiKey
+        var response = '';
+        var url = "https://" + region + host + "/api/lol/" + region + "/" + statsVersion + "/stats/by-summoner/" + id + "/ranked?api_key=" + apiKey
 
-    https.get(url, function (rs) {
-        rs.on('data', function (chunk) {
-            response += chunk;
+        https.get(url, function (rs) {
+            rs.on('data', function (chunk) {
+                response += chunk;
+            });
+            rs.on('error', function (e) {
+                console.error(e);
+            });
+            rs.on('end', function () {
+                res.send(response);
+            });
         });
-        rs.on('error', function (e) {
-            console.error(e);
-        });
-        rs.on('end', function () {
-            res.send(response);
-        });
-    });
+    }, getTimeOut());
 });
 
 app.get('/champlist', function (req, res) {
@@ -123,6 +152,7 @@ app.get('/locale/:lang([a-z]+)', function (req, res) {
         res.sendFile(path.join(doom, 'localization/ru.json'));
     }
 });
+
 
 var server = app.listen(3000, function () {
     var host = server.address().address;

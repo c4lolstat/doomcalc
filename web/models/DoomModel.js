@@ -199,75 +199,38 @@ var DoomModel = Backbone.Model.extend({
         var self = this;
         var currentLocation = window.location;
 
-        function ajaxCall(participant, callback) {
-            $.ajax({
-                url: currentLocation.origin + "/rankedstat/" + participants[participant].summonerId + "/" + self.get('region')
-                , success: function (data) {
-                    responses.set(participants[participant].summonerId, data);
-                    callback();
-                },
-                error: function () {
-                    responses.set('error', 'fail');
-                    callback();
-                }
-            });
-        };
+        var player0=$.ajax(currentLocation.origin + "/rankedstat/" + participants[0].summonerId + "/" + self.get('region'));
+        var player1=$.ajax(currentLocation.origin + "/rankedstat/" + participants[1].summonerId + "/" + self.get('region'));
+        var player2=$.ajax(currentLocation.origin + "/rankedstat/" + participants[2].summonerId + "/" + self.get('region'));
+        var player3=$.ajax(currentLocation.origin + "/rankedstat/" + participants[3].summonerId + "/" + self.get('region'));
+        var player4=$.ajax(currentLocation.origin + "/rankedstat/" + participants[4].summonerId + "/" + self.get('region'));
+        var player5=$.ajax(currentLocation.origin + "/rankedstat/" + participants[5].summonerId + "/" + self.get('region'));
+        var player6=$.ajax(currentLocation.origin + "/rankedstat/" + participants[6].summonerId + "/" + self.get('region'));
+        var player7=$.ajax(currentLocation.origin + "/rankedstat/" + participants[7].summonerId + "/" + self.get('region'));
+        var player8=$.ajax(currentLocation.origin + "/rankedstat/" + participants[8].summonerId + "/" + self.get('region'));
+        var player9=$.ajax(currentLocation.origin + "/rankedstat/" + participants[9].summonerId + "/" + self.get('region'));
 
-        setTimeout(function () {
-            ajaxCall(0, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(1, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(2, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(3, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(4, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(5, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(6, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(7, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(8, function () {
-            });
-        }, getTimeOut());
-
-        setTimeout(function () {
-            ajaxCall(9, function () {
+        $.when(player0, player1, player2, player3, player4, player5, player6, player7, player8, player9
+            )
+            .done(function (data0, data1,data2,data3, data4, data5, data6, data7, data8, data9
+            ) {
+                responses.set(participants[0].summonerId, data0[0]);
+                responses.set(participants[1].summonerId, data1[0]);
+                responses.set(participants[2].summonerId, data2[0]);
+                responses.set(participants[3].summonerId, data3[0]);
+                responses.set(participants[4].summonerId, data4[0]);
+                responses.set(participants[5].summonerId, data5[0]);
+                responses.set(participants[6].summonerId, data6[0]);
+                responses.set(participants[7].summonerId, data7[0]);
+                responses.set(participants[8].summonerId, data8[0]);
+                responses.set(participants[9].summonerId, data9[0]);
                 self.set('responses', responses);
-                if (!self.checkResponses()) {
-                    self.buildTeams()
-                } else {
-                    self.fireEvent('error:api');
-                }
-            });
-        }, getTimeOut());
+                self.buildTeams();
+            }).fail(
+            function(){
+                self.fireEvent('error:api');
+            }
+        );
     },
 
     checkResponses: function () {

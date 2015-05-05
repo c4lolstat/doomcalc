@@ -26,8 +26,8 @@
             </tr>
             <tr>
                 <td><%_winrate%></td>
-                <td>{{this.teams.0.winrate}}</td>
-                <td>{{this.teams.1.winrate}}</td>
+                <td>{{this.teams.0.winrate}}%</td>
+                <td>{{this.teams.1.winrate}}%</td>
             </tr>
             <tr>
                 <td><%_gold%></td>
@@ -66,6 +66,7 @@
                     <td><%_player%></td>
                     <td><%_win%></td>
                     <td><%_lost%></td>
+                    <td><%_winrate%></td>
                     <td><%_kill%></td>
                     <td><%_death%></td>
                     <td><%_assist%></td>
@@ -79,6 +80,7 @@
                         <td>{{this.name}} - <b>{{this.champion}}</b></td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>
+                        <td>{{this.smwrate}}%</td>
                         <td>{{this.kill}}</td>
                         <td>{{this.death}}</td>
                         <td>{{this.assist}}</td>
@@ -91,5 +93,5 @@
             {{/each}}
         </table>
     </div>
-    <button class="clickable button" onclick="eventAgg.trigger('build:readyforteam')"><%_doombutton%></button>
+    <button class="clickable button" onclick="eventAgg.trigger('doom:again')"><%_doombutton%></button>
 </div>

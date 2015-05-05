@@ -3,7 +3,7 @@
  */
 "use strict";
 var SummonerModel = Backbone.Model.extend({
-    defaults: function(){
+    defaults: function () {
         return {
             name: "",
             championId: 0,
@@ -20,6 +20,7 @@ var SummonerModel = Backbone.Model.extend({
             win: 0,
             lost: 0,
             turret: 0,
+            smwrate:0,
             champList: {}
         }
     },
@@ -38,6 +39,7 @@ var SummonerModel = Backbone.Model.extend({
         obj.cs = this.get('creepscore');
         obj.win = this.get('win');
         obj.lost = this.get('lost');
+        obj.smwrate = this.get('smwrate');
         obj.turret = this.get('turret');
 
         return obj;
@@ -66,6 +68,8 @@ var SummonerModel = Backbone.Model.extend({
                 }
                 this.set('win', this.get('stats').totalSessionsWon);
                 this.set('lost', this.get('stats').totalSessionsLost);
+                var winrate = (this.get('win') / total)*100;
+                this.set('smwrate', winrate.toFixed(2));
                 var gold = this.get('stats').totalGoldEarned / total;
                 this.set('gold', Math.round(gold));
                 var cs = this.get('stats').totalMinionKills / total;
