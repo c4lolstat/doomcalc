@@ -1,4 +1,4 @@
-Super awsome stuff for League of Legends team stats. Created by C4.
+Super awesome stuff for League of Legends team stats. Created by C4.
 
 This software  isn’t endorsed by Riot Games
 and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing
@@ -35,7 +35,7 @@ To run:
   (FL)   ,'  ,-----'   |        \
          `--{__________)        \/
 
-Toubleshooting:
+Troubleshooting:
 If server.js fail try to install express.js
 In command line put "npm install express -g" or "npm install express"
 Try again.
