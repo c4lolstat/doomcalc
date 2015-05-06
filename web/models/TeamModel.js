@@ -153,7 +153,8 @@ var TeamModel = Backbone.Model.extend({
         var df = this.get('DF');
         var wr = (((this.get('winrate') * nonFirstTimers) + (50.00 * firstTimers)) / 5) - 50.00;
         var g = (this.get('gold') / 3000) - (3 * nonFirstTimers);
-        this.set('doom', Math.round(df+wr+g).toFixed(2));
+        var t = ( this.get('total') * ( this.get('winrate') / 100 ) ) / 5;
+        this.set('doom', Math.round(df+wr+g+t));
         //var cos = Math.cos(3.14 / 3);
         //var sin = Math.sin(3.14 / 3);
         //var a = Math.sqrt(Math.pow((wr * sin), 2) + Math.pow((df + (cos * wr)), 2));
