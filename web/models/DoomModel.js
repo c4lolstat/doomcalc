@@ -140,10 +140,10 @@ var DoomModel = Backbone.Model.extend({
 
     buildTeams: function () {
         var self = this;
-        var allyTeam = new TeamModel({players: self.get('ally'), responses: self.get('responses')}).build();
+        var allyTeam = new TeamModel({players: self.get('ally'), responses: self.get('responses'),leagues:self.get('leagues')}).build();
         self.set('allyteam', allyTeam);
         self.set('allyDoom', parseFloat(self.get('allyteam').get('doom')));
-        var enemyTeam = new TeamModel({players: self.get('enemy'), responses: self.get('responses')}).build();
+        var enemyTeam = new TeamModel({players: self.get('enemy'), responses: self.get('responses'),leagues:self.get('leagues')}).build();
         self.set('enemyteam', enemyTeam);
         self.set('enemyDoom', parseFloat(self.get('enemyteam').get('doom')));
         self.fireEvent('build:teamsready');
@@ -190,9 +190,46 @@ var DoomModel = Backbone.Model.extend({
         obj.enemyDoomPercentage = this.get('enemyDoomPercentage');
         obj.doomMessage = this.get('doomMessage');
         return obj;
-    }
-    ,
+    },
 
+    getLeagues: function (participants) {
+        var responses = new Map();
+        var self = this;
+        var currentLocation = window.location;
+
+        var player0=$.ajax(currentLocation.origin + "/league/" + participants[0].summonerId + "/" + self.get('region'));
+        var player1=$.ajax(currentLocation.origin + "/league/" + participants[1].summonerId + "/" + self.get('region'));
+        var player2=$.ajax(currentLocation.origin + "/league/" + participants[2].summonerId + "/" + self.get('region'));
+        var player3=$.ajax(currentLocation.origin + "/league/" + participants[3].summonerId + "/" + self.get('region'));
+        var player4=$.ajax(currentLocation.origin + "/league/" + participants[4].summonerId + "/" + self.get('region'));
+        var player5=$.ajax(currentLocation.origin + "/league/" + participants[5].summonerId + "/" + self.get('region'));
+        var player6=$.ajax(currentLocation.origin + "/league/" + participants[6].summonerId + "/" + self.get('region'));
+        var player7=$.ajax(currentLocation.origin + "/league/" + participants[7].summonerId + "/" + self.get('region'));
+        var player8=$.ajax(currentLocation.origin + "/league/" + participants[8].summonerId + "/" + self.get('region'));
+        var player9=$.ajax(currentLocation.origin + "/league/" + participants[9].summonerId + "/" + self.get('region'));
+
+        $.when(player0, player1, player2, player3, player4, player5, player6, player7, player8, player9
+        )
+            .done(function (data0, data1,data2,data3, data4, data5, data6, data7, data8, data9
+            ) {
+                responses.set(participants[0].summonerId, data0[0]);
+                responses.set(participants[1].summonerId, data1[0]);
+                responses.set(participants[2].summonerId, data2[0]);
+                responses.set(participants[3].summonerId, data3[0]);
+                responses.set(participants[4].summonerId, data4[0]);
+                responses.set(participants[5].summonerId, data5[0]);
+                responses.set(participants[6].summonerId, data6[0]);
+                responses.set(participants[7].summonerId, data7[0]);
+                responses.set(participants[8].summonerId, data8[0]);
+                responses.set(participants[9].summonerId, data9[0]);
+                self.set('leagues', responses);
+                self.fireEvent('build:fetched');
+            }).fail(
+            function(){
+                self.fireEvent('error:api');
+            }
+        );
+    },
 
     getStats: function (participants) {
         var responses = new Map();
@@ -225,7 +262,7 @@ var DoomModel = Backbone.Model.extend({
                 responses.set(participants[8].summonerId, data8[0]);
                 responses.set(participants[9].summonerId, data9[0]);
                 self.set('responses', responses);
-                self.buildTeams();
+                self.getLeagues(self.get('participants'));
             }).fail(
             function(){
                 self.fireEvent('error:api');

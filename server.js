@@ -12,6 +12,7 @@ var doom = path.join(__dirname, 'web');
 var host = ".api.pvp.net";
 var summonerVersion = "v1.4";
 var statsVersion = "v1.3";
+var leagueVersion="v2.5";
 var apiKey = "b0e2d67c-bb60-45e1-bb25-90806016c163";
 
 var options = {
@@ -126,6 +127,28 @@ app.get('/rankedstat/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     }, getTimeOut());
 });
 
+app.get('/league/:id([0-9]+)/:region([a-z]+)', function (req, res) {
+    setTimeout(function () {
+        var id = req.params.id;
+        var region = req.params.region;
+
+        var response = '';
+        var url = "https://" + region + host + "/api/lol/" + region + "/"+leagueVersion+"/league/by-summoner/" + id + "?api_key=" + apiKey
+
+        https.get(url, function (rs) {
+            rs.on('data', function (chunk) {
+                response += chunk;
+            });
+            rs.on('error', function (e) {
+                console.error(e);
+            });
+            rs.on('end', function () {
+                res.send(response);
+            });
+        });
+    }, getTimeOut());
+});
+
 app.get('/champlist', function (req, res) {
     var response = '';
     var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?locale=en_US&dataById=true&api_key=" + apiKey;
@@ -154,7 +177,7 @@ app.get('/locale/:lang([a-z]+)', function (req, res) {
 });
 
 
-var server = app.listen(3000, function () {
+var server = app.listen(1708, function () {
     var host = server.address().address;
     var port = server.address().port;
 

@@ -5,6 +5,8 @@
 var SummonerModel = Backbone.Model.extend({
     defaults: function () {
         return {
+            id: 0,
+            league: new Array(),
             name: "",
             championId: 0,
             spell1Id: 0,
@@ -20,8 +22,11 @@ var SummonerModel = Backbone.Model.extend({
             win: 0,
             lost: 0,
             turret: 0,
-            smwrate:0,
-            champList: {}
+            smwrate: 0,
+            champList: {},
+            tier: '',
+            division: '',
+            lp: 0
         }
     },
 
@@ -41,11 +46,33 @@ var SummonerModel = Backbone.Model.extend({
         obj.lost = this.get('lost');
         obj.smwrate = this.get('smwrate');
         obj.turret = this.get('turret');
+        obj.lp = this.get('lp');
+        obj.tier = this.get('tier').slice(0,1);
+        obj.division = this.get('division');
 
         return obj;
     },
 
-    build: function () {
+    getLeagueInfo: function () {
+        try {
+            var self = this;
+            var league = JSON.parse(self.get('league'));
+            self.set('tier', league[self.get('id')][0].tier);
+            var entries = league[self.get('id')][0].entries;
+            $.each(entries, function (i, entry) {
+                if (parseInt(entry.playerOrTeamId) === self.get('id')) {
+                    self.set('lp', entry.leaguePoints);
+                    self.set('division', entry.division);
+                }
+            });
+        }catch (err){
+            this.set('lp','?');
+            this.set('tier','?');
+            this.set('division','?');
+        }
+    },
+
+    getStats: function () {
         try {
             var champion = this.get('champList').data[this.get('championId')].name;
             this.set('champion', champion);
@@ -68,7 +95,7 @@ var SummonerModel = Backbone.Model.extend({
                 }
                 this.set('win', this.get('stats').totalSessionsWon);
                 this.set('lost', this.get('stats').totalSessionsLost);
-                var winrate = (this.get('win') / total)*100;
+                var winrate = (this.get('win') / total) * 100;
                 this.set('smwrate', winrate.toFixed(2));
                 var gold = this.get('stats').totalGoldEarned / total;
                 this.set('gold', Math.round(gold));
@@ -78,6 +105,10 @@ var SummonerModel = Backbone.Model.extend({
                 this.set('turret', Math.round(turret));
             }
         }
+    },
+    build: function () {
+        this.getLeagueInfo()
+        this.getStats();
         return this;
     }
 

@@ -63,34 +63,42 @@ var TeamModel = Backbone.Model.extend({
         return this.get('responses').has(summonerId) ? this.get('responses').get(summonerId) : '';
     },
 
-    selectChampion: function (response, player) {
+    selectLeague: function(summonerId){
+        return this.get('leagues').has(summonerId) ? this.get('leagues').get(summonerId) : '';
+    },
+
+    selectChampion: function (response, league, player) {
         var self = this;
         var champions = JSON.parse(response).champions;
         var stats = '';
         var first = self.get('firstTimer');
         $.each(champions, function (i, champion) {
             if (champion.id === player.championId) {
-                stats = self.getSummonerModel(champion.stats, player);
+                stats = self.getSummonerModel(champion.stats, league, player);
             }
         });
         if (stats === '') {
             first = first + 1;
             self.set('firstTimer', first);
-            stats = self.getSummonerModel(JSON.parse(nullStat).champions[0].stats, player);
+            stats = self.getSummonerModel(JSON.parse(nullStat).champions[0].stats, league ,player);
         }
         return stats;
     },
 
     fillUpModels: function (players) {
         var self = this;
+
         $.each(players, function (i, player) {
             var response = self.selectResponse(player.summonerId);
-            self.get('models').push(self.selectChampion(response, player));
+            var league = self.selectLeague(player.summonerId);
+            self.get('models').push(self.selectChampion(response, league ,player));
         });
     },
 
-    getSummonerModel: function (stats, player) {
+    getSummonerModel: function (stats, league, player) {
         return new SummonerModel({
+            league:league,
+            id:player.summonerId,
             name: player.summonerName,
             stats: stats,
             championId: player.championId,

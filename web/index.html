@@ -48,7 +48,7 @@
 
     var eventAgg;
     var doomModel;
-    var watchDogTime = 60000;
+    var watchDogTime = 90000;
     var dictionary = new Map();
     var lang = lang || 'en';
     var eventAggregator = _.extend({}, Backbone.Events);
@@ -101,6 +101,10 @@
 
         eventAggregator.on('build:teamsready', function () {
             doomModel.calculateDoom();
+        });
+
+        eventAggregator.on('build:fetched', function () {
+            doomModel.buildTeams();
         });
 
         eventAggregator.on('doom:again', function () {

@@ -64,6 +64,7 @@
             {{#each this.teams}}
                 <thead>
                     <td><%_player%></td>
+                    <td><%_rank%> (lp)</td>
                     <td><%_win%></td>
                     <td><%_lost%></td>
                     <td><%_winrate%></td>
@@ -78,6 +79,7 @@
                 {{#each this.members}}
                     <tr class="data">
                         <td>{{this.name}} - <b>{{this.champion}}</b></td>
+                        <td>{{this.tier}}/{{this.division}} ({{this.lp}})</td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>
                         <td>{{this.smwrate}}%</td>
