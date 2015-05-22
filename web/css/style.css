@@ -14,6 +14,10 @@
     color: red;
 }
 
+a{
+    text-decoration: none;
+}
+
 .button {
     background: #000;
     border: 2px solid #000;
@@ -152,7 +156,8 @@ table thead {
     background: #c0c0c0;
 }
 
-table thead td {
+table thead th {
+    padding: 5px 10px;
     font-weight: bold;
 }
 

@@ -4,8 +4,7 @@ this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};
 this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "                <thead>\r\n                    <td><%_player%></td>\r\n                    <td><%_rank%> (lp)</td>\r\n                    <td><%_win%></td>\r\n                    <td><%_lost%></td>\r\n                    <td><%_winrate%></td>\r\n                    <td><%_kill%></td>\r\n                    <td><%_death%></td>\r\n                    <td><%_assist%></td>\r\n                    <td><%_kda%></td>\r\n                    <td><%_gold%></td>\r\n                    <td><%_cs%></td>\r\n                    <td><%_turret%></td>\r\n                </thead>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.members : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.members : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"2":function(depth0,helpers,partials,data) {
     var alias1=this.lambda, alias2=this.escapeExpression;
 
@@ -47,7 +46,7 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
     + ((stack1 = alias1((depth0 != null ? depth0.doomMessage : depth0), depth0)) != null ? stack1 : "")
     + " (<span id=\"score\">"
     + alias2(alias1((depth0 != null ? depth0.allyDoomPercentage : depth0), depth0))
-    + "</span>)</h1>\r\n    </div>\r\n    <br/>\r\n    <h2><%_teamoverview%></h2>\r\n    <br/>\r\n    <div id=\"teams\">\r\n        <table>\r\n            <thead>\r\n            <td></td>\r\n            <td><%_ally%></td>\r\n            <td><%_enemy%></td>\r\n            </thead>\r\n            <tr>\r\n                <td><%_df%></td>\r\n                <td>"
+    + "</span>)</h1>\r\n    </div>\r\n    <br/>\r\n    <h2><%_teamoverview%></h2>\r\n    <br/>\r\n    <div id=\"teams\">\r\n        <table>\r\n            <thead>\r\n            <th></th>\r\n            <th><%_ally%></th>\r\n            <th><%_enemy%></th>\r\n            </thead>\r\n            <tr>\r\n                <td><%_df%></td>\r\n                <td>"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.teams : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.DF : stack1), depth0))
     + "</td>\r\n                <td>"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.teams : depth0)) != null ? stack1['1'] : stack1)) != null ? stack1.DF : stack1), depth0))
@@ -79,7 +78,7 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.teams : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.doom : stack1), depth0))
     + "</td>\r\n                <td>"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.teams : depth0)) != null ? stack1['1'] : stack1)) != null ? stack1.doom : stack1), depth0))
-    + "</td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n    <br/>\r\n    <h2><%_playeroverview%></h2>\r\n    <br/>\r\n    <div id=\"players\">\r\n        <table>\r\n"
+    + "</td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n    <br/>\r\n    <h2><%_playeroverview%></h2>\r\n    <br/>\r\n    <div id=\"players\">\r\n        <table>\r\n                <thead>\r\n                    <th><%_player%></th>\r\n                    <th><%_rank%> (lp)</th>\r\n                    <th><%_win%></th>\r\n                    <th><%_lost%></th>\r\n                    <th><%_winrate%></th>\r\n                    <th><%_kill%></th>\r\n                    <th><%_death%></th>\r\n                    <th><%_assist%></th>\r\n                    <th><%_kda%></th>\r\n                    <th><%_gold%></th>\r\n                    <th><%_cs%></th>\r\n                    <th><%_turret%></th>\r\n                </thead>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.teams : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "        </table>\r\n    </div>\r\n    <button class=\"clickable button\" onclick=\"eventAgg.trigger('doom:again')\"><%_doombutton%></button>\r\n</div>\r\n";
 },"useData":true});

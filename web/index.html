@@ -35,6 +35,7 @@
     <script type="text/javascript" src="helpers/Router.js"></script>
     <script type="text/javascript" src="helpers/Colorize.js"></script>
     <script type="text/javascript" src="helpers/IsJson.js"></script>
+    <script type="text/javascript" src="helpers/table2csv.js"></script>
 
     <title>How doomed are you?</title>
 
@@ -52,6 +53,7 @@
     var dictionary = new Map();
     var lang = lang || 'en';
     var eventAggregator = _.extend({}, Backbone.Events);
+    var exporter= new toCsv();
     eventAgg = eventAggregator;
     woodman.load('console');
     var logger = woodman.getLogger('index');
@@ -81,6 +83,7 @@
             doomModel.set('doomRendered', true);
             var color = colorize(doomModel.get('allyDoomPercentage'));
             $('#judge').css('background', color);
+            exporter.export(['#teams','#players']);
         });
 
         eventAggregator.on('input:getTeam', function () {

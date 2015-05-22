@@ -10,9 +10,9 @@
     <div id="teams">
         <table>
             <thead>
-            <td></td>
-            <td><%_ally%></td>
-            <td><%_enemy%></td>
+            <th></th>
+            <th><%_ally%></th>
+            <th><%_enemy%></th>
             </thead>
             <tr>
                 <td><%_df%></td>
@@ -61,21 +61,21 @@
     <br/>
     <div id="players">
         <table>
-            {{#each this.teams}}
                 <thead>
-                    <td><%_player%></td>
-                    <td><%_rank%> (lp)</td>
-                    <td><%_win%></td>
-                    <td><%_lost%></td>
-                    <td><%_winrate%></td>
-                    <td><%_kill%></td>
-                    <td><%_death%></td>
-                    <td><%_assist%></td>
-                    <td><%_kda%></td>
-                    <td><%_gold%></td>
-                    <td><%_cs%></td>
-                    <td><%_turret%></td>
+                    <th><%_player%></th>
+                    <th><%_rank%> (lp)</th>
+                    <th><%_win%></th>
+                    <th><%_lost%></th>
+                    <th><%_winrate%></th>
+                    <th><%_kill%></th>
+                    <th><%_death%></th>
+                    <th><%_assist%></th>
+                    <th><%_kda%></th>
+                    <th><%_gold%></th>
+                    <th><%_cs%></th>
+                    <th><%_turret%></th>
                 </thead>
+            {{#each this.teams}}
                 {{#each this.members}}
                     <tr class="data">
                         <td>{{this.name}} - <b>{{this.champion}}</b></td>
