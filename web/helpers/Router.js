@@ -7,7 +7,8 @@ var DocumentRouter = Backbone.Router.extend({
     routes: {
         'inputs': 'inputs',
         'doom': 'doom',
-        'error': 'error'
+        'error': 'error',
+        'doom/:player':'showPopUp'
     },
     initialize: function (model, eventAgg) {
         this.model = model;
@@ -22,5 +23,9 @@ var DocumentRouter = Backbone.Router.extend({
     },
     error: function () {
         $("#container").empty().append(new ErrorView({model: this.model}).render().el);
+    },
+    showPopUp: function(player){
+      //  new PopUpView({model: this.model}).render(player);
+       $("#popup").empty().append(new PopUpView({model: this.model}).render(player).el);
     }
 });

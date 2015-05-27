@@ -1,0 +1,16 @@
+<div id="runesandmasteries">
+    <h2>Masteries: </h2><h3>{{this.masteries}}</h3>
+    <h2>Runes: </h2>
+         <table id="runes">
+            <thead>
+                <th>Count</th>
+                <th>Description</th>
+            <thead/>
+            {{#each this.runes }}
+                <tr>
+                    <td>{{this.count}}</td>
+                    <td>{{this.description}}</td>
+                </tr>
+            {{/each}}
+        </table>
+</div>

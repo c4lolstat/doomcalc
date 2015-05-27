@@ -166,6 +166,40 @@ app.get('/champlist', function (req, res) {
     });
 });
 
+app.get('/runelist', function (req, res) {
+    var response = '';
+    var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/rune?locale=en_US&dataById=true&api_key=" + apiKey;
+
+    https.get(url, function (rs) {
+        rs.on('data', function (chunk) {
+            response += chunk;
+        });
+        rs.on('error', function (e) {
+            console.error(e);
+        });
+        rs.on('end', function () {
+            res.send(response);
+        });
+    });
+});
+
+app.get('/masterylist', function (req, res) {
+    var response = '';
+    var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/mastery?locale=en_US&masteryListData=masteryTree&api_key=" + apiKey;
+
+    https.get(url, function (rs) {
+        rs.on('data', function (chunk) {
+            response += chunk;
+        });
+        rs.on('error', function (e) {
+            console.error(e);
+        });
+        rs.on('end', function () {
+            res.send(response);
+        });
+    });
+});
+
 app.get('/locale/:lang([a-z]+)', function (req, res) {
     var lang = req.params.lang;
     if (lang === 'en') {

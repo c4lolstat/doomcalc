@@ -21,10 +21,12 @@
     <script src="compiled/input.tpl.js"></script>
     <script src="compiled/doom.tpl.js"></script>
     <script src="compiled/error.tpl.js"></script>
+    <script src="compiled/popup.tpl.js"></script>
 
     <script type="text/javascript" src="views/InputView.js"></script>
     <script type="text/javascript" src="views/DoomView.js"></script>
     <script type="text/javascript" src="views/ErrorView.js"></script>
+    <script type="text/javascript" src="views/PopupView.js"></script>
 
     <script type="text/javascript" src="models/SummonerModel.js"></script>
     <script type="text/javascript" src="models/DoomModel.js"></script>
@@ -122,6 +124,10 @@
             $('#loading').hide();
             $('#content').show();
             router.navigate('error', {trigger: true});
+        });
+
+        eventAggregator.on('navigate',function(param){
+            router.navigate(param,{trigger:true});
         });
 
         eventAggregator.on('language:set', function () {

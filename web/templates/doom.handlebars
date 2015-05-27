@@ -57,6 +57,7 @@
         </table>
     </div>
     <br/>
+    <div id="popup"></div>
     <h2><%_playeroverview%></h2>
     <br/>
     <div id="players">
@@ -78,7 +79,7 @@
             {{#each this.teams}}
                 {{#each this.members}}
                     <tr class="data">
-                        <td>{{this.name}} - <b>{{this.champion}}</b></td>
+                        <td onclick="eventAgg.trigger('navigate','/doom/{{this.name}}')">{{this.name}} - <b>{{this.champion}}</b></td>
                         <td>{{this.tier}}/{{this.division}} ({{this.lp}})</td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>

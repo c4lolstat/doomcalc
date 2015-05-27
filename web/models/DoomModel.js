@@ -272,6 +272,40 @@ var DoomModel = Backbone.Model.extend({
 
     checkResponses: function () {
         return this.get('responses').has('error');
+    },
+
+    getMasteries: function(player){
+        var rawMasteries= {};
+        var participants=this.get('participants');
+        var i=0;
+        while (participants[i].summonerName !== player){
+                i++;
+            }
+        rawMasteries = participants[i].masteries;
+        var def=0;
+        var util=0;
+        var off=0;
+        $.each (rawMasteries, function(i,value){
+            var tmpTree = masteryList.data[value.masteryId].masteryTree;
+            if ("Offense" === tmpTree) {off+=value.rank;}
+            if ("Defense" === tmpTree) {def+=value.rank;}
+            if ("Utility" === tmpTree) {util+=value.rank;}
+        });
+        return off+'/'+def+'/'+util;
+    },
+
+    getRunes : function(player){
+        var rawRunes= {};
+        var participants=this.get('participants');
+        var i=0;
+        while (participants[i].summonerName !== player){
+            i++;
+        }
+        rawRunes = participants[i].runes;
+        $.each (rawRunes, function(i,value){
+            rawRunes[i].description = runeList.data[value.runeId].description;
+        });
+        return rawRunes;
     }
 
 });
