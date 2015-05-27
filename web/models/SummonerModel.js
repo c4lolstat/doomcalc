@@ -49,6 +49,7 @@ var SummonerModel = Backbone.Model.extend({
         obj.lp = this.get('lp');
         obj.tier = this.get('tier').slice(0,1);
         obj.division = this.get('division');
+        obj.id = this.get('id');
 
         return obj;
     },
