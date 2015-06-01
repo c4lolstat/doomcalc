@@ -32,7 +32,6 @@ a{
 }
 
 .button:hover {
-    border: 2px solid red;
     color: red;
 }
 
@@ -165,10 +164,18 @@ table tr td {
     padding: 5px 10px;
     border-bottom: 1px solid #c0c0c0;
 }
+#players { display: inline-block; margin-right: 20px; vertical-align: top; }
+#players table tbody tr td:nth-child(1) { cursor: pointer; }
 #players table tr td:nth-child(3) { border-left: 1px solid #c0c0c0; }
 #players table tr td:nth-child(5) { border-right: 1px solid #c0c0c0; }
 #players table tr td:nth-child(8) { border-right: 1px solid #c0c0c0; }
 #players table tr.data td:not(:nth-child(1)) { text-align: center; }
+#players table tbody tr:nth-child(5) { border-bottom: 5px solid #c0c0c0; }
+#players table tbody tr td {
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+}
 #loading{
     position:absolute;
     top: 100px;
@@ -176,3 +183,4 @@ table tr td {
 
 }
 #judge { padding: 10px 15px; margin-bottom: 20px; display: inline-block; }
+#popup { display: inline-block; }
