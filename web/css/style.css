@@ -185,3 +185,19 @@ table tr td {
 }
 #judge { padding: 10px 15px; margin-bottom: 20px; display: inline-block; }
 #popup { display: inline-block; }
+
+
+.left{
+    float: left;
+}
+
+#close {
+    border: 1px solid #c0c0c0;
+    padding:1px;
+    float: right;
+    cursor: pointer;
+}
+
+#runetable {
+    clear: both;
+}

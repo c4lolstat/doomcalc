@@ -91,6 +91,7 @@
         });
 
         eventAggregator.on('render:afterpopup', function (player) {
+            $('#popup').show();
             var player = player.trim().replace(/\s/g, '').toLowerCase();
             if (lastPlayer.length != 0) $('#'+lastPlayer).css('color','black');
             $('#'+player).css('color','red');
@@ -137,6 +138,10 @@
 
         eventAggregator.on('navigate',function(param){
             router.navigate(param,{trigger:true});
+        });
+
+        eventAggregator.on('popup:hide',function(){
+            $('#popup').hide();
         });
 
         eventAggregator.on('language:set', function () {

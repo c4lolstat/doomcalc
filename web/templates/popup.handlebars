@@ -1,16 +1,20 @@
 <div id="runesandmasteries">
-    <h2><%_masteries%>: </h2><h3>{{this.masteries}}</h3>
-    <h2><%_runes%>: </h2>
-         <table id="runes">
-            <thead>
-                <th><%_count%></th>
-                <th><%_description%></th>
-            <thead/>
-            {{#each this.runes }}
-                <tr>
-                    <td>{{this.count}}</td>
-                    <td>{{this.description}}</td>
-                </tr>
-            {{/each}}
-        </table>
+    <div>
+        <h2 class="left"><%_masteries%>: </h2> <h3 class="left">{{this.masteries}}</h3> <spam id="close" onclick="eventAgg.trigger('popup:hide')">X</spam>
+    </div>
+    <div id="runetable">
+        <h2><%_runes%>: </h2>
+             <table id="runes">
+                <thead>
+                    <th><%_count%></th>
+                    <th><%_description%></th>
+                <thead/>
+                {{#each this.runes }}
+                    <tr>
+                        <td>{{this.count}}</td>
+                        <td>{{this.description}}</td>
+                    </tr>
+                {{/each}}
+            </table>
+    </div>
 </div>
