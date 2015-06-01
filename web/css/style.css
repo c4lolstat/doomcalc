@@ -168,6 +168,7 @@ table tr td {
 #players table tr td:nth-child(3) { border-left: 1px solid #c0c0c0; }
 #players table tr td:nth-child(5) { border-right: 1px solid #c0c0c0; }
 #players table tr td:nth-child(8) { border-right: 1px solid #c0c0c0; }
+#players table tr:nth-child(5) { border-bottom: 3px solid #c0c0c0; }
 #players table tr.data td:not(:nth-child(1)) { text-align: center; }
 #loading{
     position:absolute;

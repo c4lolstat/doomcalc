@@ -18,17 +18,12 @@ var PopUpView = Backbone.View.extend({
             masteries: this.model.getMasteries(player)
         };
         var content = this.template(context);
-        //content = underi18n.template(content, dictionary.get(lang));
+        content = underi18n.template(content, dictionary.get(lang));
         this.$el.append(content);
         return this;
     },
 
     render: function (player) {
-        //console.log(player);
-        //var masteries = this.model.getMasteries(player);
-        //var runes = this.model.getRunes(player);
-        //console.log(masteries);
-       // console.log(runes);
         this.renderPopup(player);
         return this;
     }

@@ -6,40 +6,42 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
 
   return ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.members : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"2":function(depth0,helpers,partials,data) {
-    var alias1=this.lambda, alias2=this.escapeExpression;
+    var alias1=this.escapeExpression, alias2=this.lambda;
 
-  return "                    <tr class=\"data\">\r\n                        <td onclick=\"eventAgg.trigger('navigate','/doom/"
-    + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
+  return "                    <tr class=\"data\">\r\n                        <td id=\""
+    + alias1((helpers.trim || (depth0 && depth0.trim) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.name : depth0),{"name":"trim","hash":{},"data":data}))
+    + "\" onclick=\"eventAgg.trigger('navigate','/doom/"
+    + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))
     + "')\">"
-    + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))
     + " - <b>"
-    + alias2(alias1((depth0 != null ? depth0.champion : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.champion : depth0), depth0))
     + "</b></td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.tier : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.tier : depth0), depth0))
     + "/"
-    + alias2(alias1((depth0 != null ? depth0.division : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.division : depth0), depth0))
     + " ("
-    + alias2(alias1((depth0 != null ? depth0.lp : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.lp : depth0), depth0))
     + ")</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.win : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.win : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.lost : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.lost : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.smwrate : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.smwrate : depth0), depth0))
     + "%</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.kill : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.kill : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.death : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.death : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.assist : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.assist : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.KDA : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.KDA : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.gold : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.gold : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.cs : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.cs : depth0), depth0))
     + "</td>\r\n                        <td>"
-    + alias2(alias1((depth0 != null ? depth0.turret : depth0), depth0))
+    + alias1(alias2((depth0 != null ? depth0.turret : depth0), depth0))
     + "</td>\r\n                    </tr>\r\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, alias1=this.lambda, alias2=this.escapeExpression;

@@ -79,7 +79,7 @@
             {{#each this.teams}}
                 {{#each this.members}}
                     <tr class="data">
-                        <td onclick="eventAgg.trigger('navigate','/doom/{{this.name}}')">{{this.name}} - <b>{{this.champion}}</b></td>
+                        <td id="{{trim this.name}}" onclick="eventAgg.trigger('navigate','/doom/{{this.name}}')">{{this.name}} - <b>{{this.champion}}</b></td>
                         <td>{{this.tier}}/{{this.division}} ({{this.lp}})</td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>

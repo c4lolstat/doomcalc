@@ -44,5 +44,9 @@
    "level9":"If you want to play with me, you better be sure you know the game.",
    "level10":"Blessed by the light!",
    "errormessage":"Some error occurred, please try again!",
-   "errorbutton":"OK"
+   "errorbutton":"OK",
+   "masteries":"Masteries",
+   "runes":"Runes",
+   "count":"Count",
+   "description":"Description"
 }

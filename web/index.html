@@ -38,6 +38,7 @@
     <script type="text/javascript" src="helpers/Colorize.js"></script>
     <script type="text/javascript" src="helpers/IsJson.js"></script>
     <script type="text/javascript" src="helpers/table2csv.js"></script>
+    <script type="text/javascript" src="helpers/Trimmer.js"></script>
 
     <title>How doomed are you?</title>
 
@@ -59,6 +60,7 @@
     eventAgg = eventAggregator;
     woodman.load('console');
     var logger = woodman.getLogger('index');
+    var lastPlayer='';
 
     doomModel = new DoomModel({eventAgg: eventAggregator});
 
@@ -86,6 +88,13 @@
             var color = colorize(doomModel.get('allyDoomPercentage'));
             $('#judge').css('background', color);
             exporter.export(['#teams','#players']);
+        });
+
+        eventAggregator.on('render:afterpopup', function (player) {
+            var player = player.trim().replace(/\s/g, '').toLowerCase();
+            if (lastPlayer.length != 0) $('#'+lastPlayer).css('color','black');
+            $('#'+player).css('color','red');
+            lastPlayer = player;
         });
 
         eventAggregator.on('input:getTeam', function () {
