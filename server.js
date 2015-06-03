@@ -1,5 +1,8 @@
-﻿/**
- * Created by Zoltan_Biro on 4/3/2015.
+﻿"use strict";
+
+/**
+ * @author Zoltan_Biro
+ * Created on 4/3/2015.
  */
 
 var express = require('express');
@@ -7,31 +10,31 @@ var path = require('path');
 var fs = require('fs');
 var https = require('https');
 var app = express();
-var doom = path.join(__dirname, 'web');
+var doomPath = path.join(__dirname, 'web');
 
-var host = ".api.pvp.net";
-var summonerVersion = "v1.4";
-var statsVersion = "v1.3";
-var leagueVersion="v2.5";
-var apiKey = "b0e2d67c-bb60-45e1-bb25-90806016c163";
-
-var options = {
-    dotfiles: 'ignore',
-    etag: false,
-    extensions: ['htm', 'html'],
-    index: false,
-    maxAge: '1d',
-    redirect: false,
-    setHeaders: function (res) {
-        res.set('x-timestamp', Date.now());
+/**Get config from file*/
+var config = JSON.parse(fs.readFileSync('serverconf.json', 'utf8', function (err, data) {
+    if (err) {
+        return {};
+    } else {
+        return data;
     }
-};
+}));
 
-var requestLimit = 10;
-var timeLimit = 10000;
+var host =config.api.host || '.api.pvp.net';
+var summonerVersion =config.api.summonerVersion || 'v1.4';
+var statsVersion =config.api.statsVersion || 'v1.3';
+var leagueVersion =config.api.leaguerVersion || 'v2.5';
+var staticVersion = config.api.staticVersion || 'v1.2';
+var apiKey = config.api.apiKey;
+
+var requestLimit = config.requestLimiter.requestLimit || 10;
+var timeLimit =config.requestLimiter.timeLimit || 10000;
 var cntrequest = 0;
 var requestTimes = [];
 
+/** Follow request for request limiting
+ * @return {number} timeout - delay for settimeout*/
 function getTimeOut() {
     var timeout = 0;
     if (cntrequest < requestLimit) {
@@ -51,16 +54,26 @@ function getTimeOut() {
     return timeout;
 };
 
-app.use(express.static(doom, options));
+/**Enable servicing static files from hdd*/
+app.use(express.static(doomPath));
 
+/**Mapping for root url
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/', function (req, res) {
-    res.sendFile(path.join(doom, 'index.html'));
+    res.sendFile(path.join(doomPath, 'index.html'));
 });
 
+/**Mapping for test page
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/testpage', function (req, res) {
-    res.sendFile(path.join(doom, 'Runner.html'));
+    res.sendFile(path.join(doomPath, 'Runner.html'));
 });
 
+/**Mapping for get summoner id by name
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/summonerid/:name/:region([a-z]+)', function (req, res) {
     setTimeout(function () {
         var name = req.params.name;
@@ -83,6 +96,9 @@ app.get('/summonerid/:name/:region([a-z]+)', function (req, res) {
     }, getTimeOut());
 });
 
+/**Mapping for current game
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/team/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     setTimeout(function () {
         var id = req.params.id;
@@ -105,13 +121,16 @@ app.get('/team/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     }, getTimeOut());
 });
 
+/**Mapping player ranked stats
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/rankedstat/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     setTimeout(function () {
         var id = req.params.id;
         var region = req.params.region;
 
         var response = '';
-        var url = "https://" + region + host + "/api/lol/" + region + "/" + statsVersion + "/stats/by-summoner/" + id + "/ranked?api_key=" + apiKey
+        var url = "https://" + region + host + "/api/lol/" + region + "/" + statsVersion + "/stats/by-summoner/" + id + "/ranked?api_key=" + apiKey;
 
         https.get(url, function (rs) {
             rs.on('data', function (chunk) {
@@ -127,13 +146,16 @@ app.get('/rankedstat/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     }, getTimeOut());
 });
 
+/**Mapping for player league (tier / division)
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/league/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     setTimeout(function () {
         var id = req.params.id;
         var region = req.params.region;
 
         var response = '';
-        var url = "https://" + region + host + "/api/lol/" + region + "/"+leagueVersion+"/league/by-summoner/" + id + "?api_key=" + apiKey
+        var url = "https://" + region + host + "/api/lol/" + region + "/" + leagueVersion + "/league/by-summoner/" + id + "?api_key=" + apiKey;
 
         https.get(url, function (rs) {
             rs.on('data', function (chunk) {
@@ -149,9 +171,13 @@ app.get('/league/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     }, getTimeOut());
 });
 
+/**Mapping for static champion list
+ * not counted in request limit
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/champlist', function (req, res) {
     var response = '';
-    var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?locale=en_US&dataById=true&api_key=" + apiKey;
+    var url = "https://global"+host+"/api/lol/static-data/euw/"+staticVersion+"/champion?locale=en_US&dataById=true&api_key=" + apiKey;
 
     https.get(url, function (rs) {
         rs.on('data', function (chunk) {
@@ -166,9 +192,13 @@ app.get('/champlist', function (req, res) {
     });
 });
 
+/**Mapping for static rune list
+ * not counted in request limit
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/runelist', function (req, res) {
     var response = '';
-    var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/rune?locale=en_US&dataById=true&api_key=" + apiKey;
+    var url = "https://global"+host+"/api/lol/static-data/euw/"+staticVersion+"/rune?locale=en_US&dataById=true&api_key=" + apiKey;
 
     https.get(url, function (rs) {
         rs.on('data', function (chunk) {
@@ -183,9 +213,13 @@ app.get('/runelist', function (req, res) {
     });
 });
 
+/**Mapping for static mastery list
+ * not counted in request limit
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/masterylist', function (req, res) {
     var response = '';
-    var url = "https://global.api.pvp.net/api/lol/static-data/euw/v1.2/mastery?locale=en_US&masteryListData=masteryTree&api_key=" + apiKey;
+    var url = "https://global"+host+"/api/lol/static-data/euw/"+staticVersion+"/mastery?locale=en_US&masteryListData=masteryTree&api_key=" + apiKey;
 
     https.get(url, function (rs) {
         rs.on('data', function (chunk) {
@@ -200,17 +234,20 @@ app.get('/masterylist', function (req, res) {
     });
 });
 
+/**Mapping for language file
+ * @param {object} req - request
+ * @param {object} re - response*/
 app.get('/locale/:lang([a-z]+)', function (req, res) {
     var lang = req.params.lang;
     if (lang === 'en') {
-        res.sendFile(path.join(doom, 'localization/en.json'));
+        res.sendFile(path.join(doomPath, 'localization/en.json'));
     }
     if (lang === 'ru') {
-        res.sendFile(path.join(doom, 'localization/ru.json'));
+        res.sendFile(path.join(doomPath, 'localization/ru.json'));
     }
 });
 
-
+/**Create server on port 1708*/
 var server = app.listen(1708, function () {
     var host = server.address().address;
     var port = server.address().port;

@@ -78,7 +78,7 @@
             {{#each this.teams}}
                 {{#each this.members}}
                     <tr class="data">
-                        <td id="{{trim this.name}}" onclick="eventAgg.trigger('navigate','/doom/{{this.name}}')">{{this.name}} - <b>{{this.champion}}</b></td>
+                        <td id="{{trim this.name}}" onclick="doom.eventAgg.trigger('navigate','/doom/{{this.name}}')">{{this.name}} - <b>{{this.champion}}</b></td>
                         <td>{{this.tier}}/{{this.division}} ({{this.lp}})</td>
                         <td>{{this.win}}</td>
                         <td>{{this.lost}}</td>
@@ -97,5 +97,5 @@
     </div>
     <div id="popup"></div>
     <div class="clear"></div>
-    <button class="clickable button" onclick="eventAgg.trigger('doom:again')"><%_doombutton%></button>
+    <button class="clickable button" onclick="doom.eventAgg.trigger('doom:again')"><%_doombutton%></button>
 </div>

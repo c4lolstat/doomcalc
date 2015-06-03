@@ -1,8 +1,15 @@
-/**
- * Created by Zoltan_Biro on 2/4/2015.
- */
 "use strict";
-var PopUpView = Backbone.View.extend({
+
+/**
+ * @author Zoltan_Biro
+ * Created on 2/4/2015.
+ */
+
+/**@class PopUpView
+ * @augments Backbone.View*/
+
+ var PopUpView = Backbone.View.extend({
+    /**@lends PopUpView.prototype*/
 
     tagName: 'div',
     id: 'popupview',
@@ -10,7 +17,9 @@ var PopUpView = Backbone.View.extend({
 
     template: Handlebars.templates['web/templates/popup.handlebars'],
 
-
+    /** PopUp subview
+     * @memberOf PopUpView#
+     * @param {string} player - summoner name */
     renderPopup: function (player) {
         this.model.getMasteries(player);
         var context = {
@@ -18,14 +27,15 @@ var PopUpView = Backbone.View.extend({
             masteries: this.model.getMasteries(player)
         };
         var content = this.template(context);
-        content = underi18n.template(content, dictionary.get(lang));
+        content = underi18n.template(content, doom.dictionary.get(doom.lang));
         this.$el.append(content);
         return this;
     },
-
+    /** Render view
+     * @memberOf PopUpiew#
+     * @param {string} player - summoner name */
     render: function (player) {
-        this.renderPopup(player);
-        return this;
+       return this.renderPopup(player);
     }
 });
 

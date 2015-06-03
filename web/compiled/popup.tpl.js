@@ -14,7 +14,7 @@ this["Handlebars"]["templates"]["web/templates/popup.handlebars"] = Handlebars.t
 
   return "<div id=\"runesandmasteries\">\r\n    <div>\r\n        <h2 class=\"left\"><%_masteries%>: </h2> <h3 class=\"left\">"
     + this.escapeExpression(this.lambda((depth0 != null ? depth0.masteries : depth0), depth0))
-    + "</h3> <spam id=\"close\" onclick=\"eventAgg.trigger('popup:hide')\">X</spam>\r\n    </div>\r\n    <div id=\"runetable\">\r\n        <h2><%_runes%>: </h2>\r\n             <table id=\"runes\">\r\n                <thead>\r\n                    <th><%_count%></th>\r\n                    <th><%_description%></th>\r\n                <thead/>\r\n"
+    + "</h3> <spam id=\"close\" onclick=\"doom.eventAgg.trigger('popup:hide')\">X</spam>\r\n    </div>\r\n    <div id=\"runetable\">\r\n        <h2><%_runes%>: </h2>\r\n             <table id=\"runes\">\r\n                <thead>\r\n                    <th><%_count%></th>\r\n                    <th><%_description%></th>\r\n                <thead/>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.runes : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "            </table>\r\n    </div>\r\n</div>";
 },"useData":true});

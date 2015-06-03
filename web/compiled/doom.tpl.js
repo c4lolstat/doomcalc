@@ -10,7 +10,7 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
 
   return "                    <tr class=\"data\">\r\n                        <td id=\""
     + alias1((helpers.trim || (depth0 && depth0.trim) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.name : depth0),{"name":"trim","hash":{},"data":data}))
-    + "\" onclick=\"eventAgg.trigger('navigate','/doom/"
+    + "\" onclick=\"doom.eventAgg.trigger('navigate','/doom/"
     + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))
     + "')\">"
     + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))
@@ -84,5 +84,5 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.teams : depth0)) != null ? stack1['1'] : stack1)) != null ? stack1.doom : stack1), depth0))
     + "</td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n    <br/>\r\n    <h2><%_playeroverview%></h2>\r\n    <br/>\r\n    <div id=\"players\">\r\n        <table>\r\n                <thead>\r\n                    <th><%_player%></th>\r\n                    <th><%_rank%> (lp)</th>\r\n                    <th><%_win%></th>\r\n                    <th><%_lost%></th>\r\n                    <th><%_winrate%></th>\r\n                    <th><%_kill%></th>\r\n                    <th><%_death%></th>\r\n                    <th><%_assist%></th>\r\n                    <th><%_kda%></th>\r\n                    <th><%_gold%></th>\r\n                    <th><%_cs%></th>\r\n                    <th><%_turret%></th>\r\n                </thead>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.teams : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "        </table>\r\n    </div>\r\n    <div id=\"popup\"></div>\r\n    <div class=\"clear\"></div>\r\n    <button class=\"clickable button\" onclick=\"eventAgg.trigger('doom:again')\"><%_doombutton%></button>\r\n</div>\r\n";
+    + "        </table>\r\n    </div>\r\n    <div id=\"popup\"></div>\r\n    <div class=\"clear\"></div>\r\n    <button class=\"clickable button\" onclick=\"doom.eventAgg.trigger('doomPathPath:again')\"><%_doombutton%></button>\r\n</div>\r\n";
 },"useData":true});

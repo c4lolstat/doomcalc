@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
   <title>Jasmine Spec Runner v2.2.0</title>
@@ -23,19 +23,20 @@
   <script type="text/javascript" src="models/SummonerModel.js"></script>
 
   <script type="text/javascript" src="helpers/Properties.js"></script>
-  <script type="text/javascript" src="helpers/RequestLimiter.js"></script>
-  <script type="text/javascript" src="helpers/IsJson.js"></script>
   <script type="text/javascript" src="helpers/Colorize.js"></script>
 
   <!-- include spec files here... -->
   <script type="text/javascript" src="test/models/SummonerModelTest.js"></script>
   <script type="text/javascript" src="test/models/TeamModelTest.js"></script>
   <script type="text/javascript" src="test/models/DoomModelTest.js"></script>
-  <script type="text/javascript" src="test/helpers/RequestLimiterTest.js"></script>
   <script type="text/javascript" src="test/helpers/ColorizeTest.js"></script>
 
 </head>
 
 <body>
+<script>
+  var doom = {};
+  doom.statics = new Constants().init();
+</script>
 </body>
 </html>

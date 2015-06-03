@@ -1,9 +1,20 @@
-/**
- * Created by Zoltan_Biro on 2/18/2015.
- */
 "use strict";
-var TeamModel = Backbone.Model.extend({
 
+/**
+ * @author Zoltan_Biro
+ * Created on 2/18/2015.
+ */
+
+/**@class TeamModel
+ * @augments Backbone.Model*/
+
+ var TeamModel = Backbone.Model.extend({
+    /**@lends TeamModel.prototype*/
+
+    /** Define default as an anonymus function.
+     * Object in default field are copied by reference upon multiple class instantation.
+     * wrapped in a function all instances get empty objects.
+     * @memberOf TeamModel# */
     defaults: function () {
         return {
             models: new Array(),
@@ -24,6 +35,9 @@ var TeamModel = Backbone.Model.extend({
         }
     },
 
+    /** Create a representation of the model as object that sufficient for templating.
+     * @memberOf TeamModel#
+     * @returns {obj} - javascript object representation of the model*/
     getTeamAsObject: function () {
         var self = this;
         var obj = {};
@@ -52,25 +66,41 @@ var TeamModel = Backbone.Model.extend({
         return obj;
     },
 
+    /** Build method for summoner
+     * @memberOf TeamModel# */
     build: function () {
-        this.fillUpModels(this.get('players'));
-        this.createAggregate();
-        this.calculateDoom();
-        return this;
+       return this.fillUpModels(this.get('players'))
+                  .createAggregate()
+                  .calculateDoom();
     },
 
+    /** Get response from the responses map
+     * @memberOf TeamModel#
+     * @param {number} summonerId - id of the summoner
+     * @returns {string} response text from map*/
     selectResponse: function (summonerId) {
         return this.get('responses').has(summonerId) ? this.get('responses').get(summonerId) : '';
     },
 
+    /** Get league from the responses map
+     * @memberOf TeamModel#
+     * @param {number} summonerId - id of the summoner
+     * @returns {string} response text from map*/
     selectLeague: function(summonerId){
         return this.get('leagues').has(summonerId) ? this.get('leagues').get(summonerId) : '';
     },
 
+    /** Select currently played champion and build model
+     * @memberOf TeamModel#
+     * @param {string} response - contain player stats by all champions
+     * @param {string} league - contain player league infos
+     * @param {string} player - player who will be built
+     * @returns {object} summonerModel instance */
     selectChampion: function (response, league, player) {
+;
         var self = this;
         var champions = JSON.parse(response).champions;
-        var stats = '';
+        var stats = {};
         var first = self.get('firstTimer');
         $.each(champions, function (i, champion) {
             if (champion.id === player.championId) {
@@ -80,21 +110,30 @@ var TeamModel = Backbone.Model.extend({
         if (stats === '') {
             first = first + 1;
             self.set('firstTimer', first);
-            stats = self.getSummonerModel(JSON.parse(nullStat).champions[0].stats, league ,player);
+            stats = self.getSummonerModel(JSON.parse(doom.statics.getNullStats()).champions[0].stats, league ,player);
         }
         return stats;
     },
-
+    /** Build all members summonerModel
+     * @memberOf TeamModel#
+     * @param {array} players - players who are members of the team.
+     * @returns {object}  */
     fillUpModels: function (players) {
         var self = this;
-
         $.each(players, function (i, player) {
             var response = self.selectResponse(player.summonerId);
             var league = self.selectLeague(player.summonerId);
             self.get('models').push(self.selectChampion(response, league ,player));
         });
+        return this;
     },
 
+    /** Get summoner model
+     * @memberOf TeamModel#
+     * @param {string} stats - contain player stats for currently played champion
+     * @param {string} league - contain player league infos
+     * @param {string} player - player who will be built
+     * @returns {object} summonerModel instance */
     getSummonerModel: function (stats, league, player) {
         return new SummonerModel({
             league:league,
@@ -104,10 +143,12 @@ var TeamModel = Backbone.Model.extend({
             championId: player.championId,
             spell1Id: player.spell1Id,
             spell2Id: player.spell2Id,
-            champList: champList
+            champList: doom.statics.getChamps()
         }).build();
     },
 
+    /** Create Team aggregated stats
+     * @memberOf TeamModel# */
     createAggregate: function () {
         var self = this;
         var kill = 0;
@@ -152,9 +193,11 @@ var TeamModel = Backbone.Model.extend({
         } else {
             self.set('winrate', '50.00');
         }
-        //console.log('kill: ' + kill + '; death: ' + death + '; gold: ' + gold + '; creepscore: ' + cs + '; assist: ' + assist + '; lost: ' + lost + '; total: ' + total + '; win: ' + win + '; KDA: ' + self.get('KDA') + '; DF: ' + self.get('DF') + '; turret: ' + turret + '; winrate: ' + self.get('winrate')+'; penalty: '+firstTimePenalty);
+        return this;
     },
 
+    /** Calculate doom value for the team
+     * @memberOf TeamModel# */
     calculateDoom: function () {
         var firstTimers = this.get('firstTimer');
         var nonFirstTimers = 5 - firstTimers;
@@ -163,14 +206,7 @@ var TeamModel = Backbone.Model.extend({
         var g = (this.get('gold') / 3000) - (3 * nonFirstTimers);
         var t = ( this.get('total') * ( this.get('winrate') / 100 ) ) / 5;
         this.set('doom', Math.round(df+wr+g+t));
-        //var cos = Math.cos(3.14 / 3);
-        //var sin = Math.sin(3.14 / 3);
-        //var a = Math.sqrt(Math.pow((wr * sin), 2) + Math.pow((df + (cos * wr)), 2));
-        //var b = Math.sqrt(Math.pow((g * sin), 2) + Math.pow((wr + (cos * g)), 2));
-        //var c = Math.sqrt(Math.pow((df * sin), 2) + Math.pow((g + (cos * df)), 2));
-        //var s = (a + b + c) / 2;
-        //this.set('doom', Math.sqrt(s * (s - a) * (s - b) * (s - c)).toFixed(2));
-        // self.set('doom', (self.get('DF') + (self.get('winrate')-50.00) +(self.get('gold') / 3000 - 15 ) + self.get('total') / 40 + firstTimePenalty).toFixed(2));
+        return this;
     }
     // dominance factor (DF) , shows even more domination is simple. Kills count as 2, deaths count as -3,
     // and assists are 1. This may seem slightly confusing at first but let's look at the examples from above.

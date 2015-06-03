@@ -6,6 +6,8 @@ describe('In summonerModel model', function () {
     var model;
     var champList = {"data": {"131": {"id": 131, "key": "Diana", "name": "Diana", "title": "Scorn of the Moon"}}};
     var name = 'c4chronic';
+    var league = '{"21886914":[{"name":"hjghj","tier":"CHALLENGER","queue":"RANKED_SOLO_5x5","entries":[{"playerOrTeamId":"21886914","playerOrTeamName":"lur1keen","division":"I","leaguePoints":10,"wins":310,"losses":268,"isHotStreak":false,"isVeteran":false,"isFreshBlood":true,"isInactive":false}]}]}';
+    var summonerId = 21886914;
     var regularStats = {
         totalSessionsPlayed: 10,
         totalChampionKills: 10,
@@ -41,16 +43,24 @@ describe('In summonerModel model', function () {
         kill: 1,
         death: 1,
         assist: 1,
+        KDA:'2.00',
         gold: 1,
         cs: 1,
         win: 5,
         lost: 5,
-        turret: 1
+        smwrate:'50.00',
+        turret: 1,
+        lp:10,
+        tier:'C',
+        division:'I',
+        id:21886914
     };
 
     describe('build method', function () {
         beforeEach(function () {
             this.model = new SummonerModel({
+                league:league,
+                id:summonerId,
                 name: name,
                 championId: championId,
                 spell1Id: spell1,
@@ -101,11 +111,30 @@ describe('In summonerModel model', function () {
             this.model.build();
             expect(this.model.get('champion')).toEqual('Unknown');
         });
+
+        it('should extract league info',function(){
+            this.model.set('stats', regularStats);
+            this.model.build();
+            expect(this.model.get('lp')).toEqual(10);
+            expect(this.model.get('tier')).toEqual('CHALLENGER');
+            expect(this.model.get('division')).toEqual('I');
+        });
+
+        it('should handle league info error',function(){
+            this.model.set('stats', regularStats);
+            this.model.set('league', '{}');
+            this.model.build();
+            expect(this.model.get('lp')).toEqual('?');
+            expect(this.model.get('tier')).toEqual('?');
+            expect(this.model.get('division')).toEqual('?');
+        });
     });
     describe('getSummonerAsObject method', function () {
 
         beforeEach(function () {
             this.model = new SummonerModel({
+                league:league,
+                id:summonerId,
                 name: name,
                 championId: championId,
                 spell1Id: spell1,

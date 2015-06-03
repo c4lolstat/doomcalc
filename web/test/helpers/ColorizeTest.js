@@ -4,17 +4,19 @@
 
 describe('Colorize',function(){
     describe('',function(){
+        var model = new Colorize();
+
         it('should give white for undefined percentage',function(){
-            var color=colorize();
-            expect(color).toEqual('rgb(255,255,255)');
+            var color=model.getColor();
+            expect(color).toEqual('rgba(255, 255, 255, 1)');
         });
         it('should give black for 100 percentage',function(){
-            var color=colorize(100);
-            expect(color).toEqual('rgb(0,0,0)');
+            var color=model.getColor(25);
+            expect(color).toEqual('rgba(255, 5, 0, 0.5)');
         });
         it('should give green for 10 percentage',function(){
-            var color=percentToRGB(10);
-            expect(color).toEqual('rgb(51,255,0)');
+            var color=model.getColor(-25);
+            expect(color).toEqual('rgba(0, 128, 0, 0.5)');
         });
     });
 });

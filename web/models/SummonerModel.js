@@ -1,8 +1,20 @@
-/**
- * Created by Zoltan_Biro on 2/11/2015.
- */
 "use strict";
+
+/**
+ * @author Zoltan_Biro
+ * Created on 2/11/2015.
+ */
+
+/**@class SummonerModel
+ * @augments Backbone.Model*/
+
 var SummonerModel = Backbone.Model.extend({
+    /**@lends   SummonerModel.prototype*/
+
+    /** Define default as an anonymus function.
+     * Object in default field are copied by reference upon multiple class instantation.
+     * wrapped in a function all instances get empty objects.
+     * @memberOf SummonerModel# */
     defaults: function () {
         return {
             id: 0,
@@ -30,6 +42,9 @@ var SummonerModel = Backbone.Model.extend({
         }
     },
 
+    /** Create a representation of the model as object that sufficient for templating.
+     * @memberOf SummonerModel#
+     * @returns {obj} - javascript object representation of the model*/
     getSummonerAsObject: function () {
         var obj = {};
 
@@ -47,13 +62,15 @@ var SummonerModel = Backbone.Model.extend({
         obj.smwrate = this.get('smwrate');
         obj.turret = this.get('turret');
         obj.lp = this.get('lp');
-        obj.tier = this.get('tier').slice(0,1);
+        obj.tier = this.get('tier').slice(0, 1);
         obj.division = this.get('division');
         obj.id = this.get('id');
 
         return obj;
     },
 
+    /** Extract league (tier/division) infos from given infos
+     * @memberOf SummonerModel# */
     getLeagueInfo: function () {
         try {
             var self = this;
@@ -66,13 +83,16 @@ var SummonerModel = Backbone.Model.extend({
                     self.set('division', entry.division);
                 }
             });
-        }catch (err){
-            this.set('lp','?');
-            this.set('tier','?');
-            this.set('division','?');
+        } catch (err) {
+            this.set('lp', '?');
+            this.set('tier', '?');
+            this.set('division', '?');
         }
+        return this;
     },
 
+    /** Extract stats from given infos
+     * @memberOf SummonerModel# */
     getStats: function () {
         try {
             var champion = this.get('champList').data[this.get('championId')].name;
@@ -106,11 +126,14 @@ var SummonerModel = Backbone.Model.extend({
                 this.set('turret', Math.round(turret));
             }
         }
-    },
-    build: function () {
-        this.getLeagueInfo()
-        this.getStats();
         return this;
+    },
+
+    /** Build method for summoner
+     * @memberOf SummonerModel# */
+    build: function () {
+        return this.getLeagueInfo()
+                   .getStats();
     }
 
 });

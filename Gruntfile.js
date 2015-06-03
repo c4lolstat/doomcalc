@@ -45,11 +45,24 @@ module.exports = function (grunt) {
                     'boot.js':'jasmine/lib/jasmine-core/boot.js'
                 }
             }
+        },
+        jsdoc : {
+            dist : {
+                src: ['web/helpers/*.js','web/models/*.js','web/views/*.js','server.js'],
+                options: {
+                    destination: 'doc',
+                    template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                    configure : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            }
         }
     });
+
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('precompile', ['handlebars']);
     grunt.registerTask('update', ['bowercopy']);
+    grunt.registerTask('documentation', ['jsdoc']);
 };
