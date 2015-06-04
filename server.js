@@ -21,10 +21,11 @@ var config = JSON.parse(fs.readFileSync('serverconf.json', 'utf8', function (err
     }
 }));
 
+
 var host =config.api.host;
 var summonerVersion =config.api.summonerVersion;
 var statsVersion =config.api.statsVersion;
-var leagueVersion =config.api.leaguerVersion;
+var leagueVersion =config.api.leagueVersion;
 var staticVersion = config.api.staticVersion;
 var apiKey = config.api.apiKey;
 
@@ -153,10 +154,8 @@ app.get('/league/:id([0-9]+)/:region([a-z]+)', function (req, res) {
     setTimeout(function () {
         var id = req.params.id;
         var region = req.params.region;
-
         var response = '';
         var url = "https://" + region + host + "/api/lol/" + region + "/" + leagueVersion + "/league/by-summoner/" + id + "?api_key=" + apiKey;
-
         https.get(url, function (rs) {
             rs.on('data', function (chunk) {
                 response += chunk;

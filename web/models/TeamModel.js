@@ -97,7 +97,6 @@
      * @param {string} player - player who will be built
      * @returns {object} summonerModel instance */
     selectChampion: function (response, league, player) {
-;
         var self = this;
         var champions = JSON.parse(response).champions;
         var stats = {};
@@ -107,10 +106,11 @@
                 stats = self.getSummonerModel(champion.stats, league, player);
             }
         });
-        if (stats === '') {
+        if (Object.keys(stats).length === 0) {
             first = first + 1;
             self.set('firstTimer', first);
-            stats = self.getSummonerModel(JSON.parse(doom.statics.getNullStats()).champions[0].stats, league ,player);
+            var tmp=JSON.parse(doom.statics.getNullStats());
+            stats = self.getSummonerModel(tmp.champions[0].stats, league ,player);
         }
         return stats;
     },
@@ -161,7 +161,6 @@
         var win = 0;
         var turret = 0;
         $.each(self.get('models'), function (i, member) {
-
             kill += member.get('kill');
             death += member.get('death');
             gold += member.get('gold');
