@@ -15,17 +15,17 @@ var doomPath = path.join(__dirname, 'web');
 /**Get config from file*/
 var config = JSON.parse(fs.readFileSync('serverconf.json', 'utf8', function (err, data) {
     if (err) {
-        return {};
+        throw err;
     } else {
         return data;
     }
 }));
 
-var host =config.api.host || '.api.pvp.net';
-var summonerVersion =config.api.summonerVersion || 'v1.4';
-var statsVersion =config.api.statsVersion || 'v1.3';
-var leagueVersion =config.api.leaguerVersion || 'v2.5';
-var staticVersion = config.api.staticVersion || 'v1.2';
+var host =config.api.host;
+var summonerVersion =config.api.summonerVersion;
+var statsVersion =config.api.statsVersion;
+var leagueVersion =config.api.leaguerVersion;
+var staticVersion = config.api.staticVersion;
 var apiKey = config.api.apiKey;
 
 var requestLimit = config.requestLimiter.requestLimit || 10;

@@ -1,0 +1,14 @@
+{
+  "api":{
+    "host" : ".api.pvp.net",
+    "summonerVersion" : "v1.4",
+    "statsVersion":  "v1.3",
+    "leagueVersion": "v2.5",
+    "staticVersion":"v1.2",
+    "apiKey": "b0e2d67c-bb60-45e1-bb25-90806016c163"
+  },
+  "requestLimiter":{
+    "requestLimit": 10,
+    "timeLimit" : 10000
+  }
+}
