@@ -13,6 +13,7 @@
     <script type="text/javascript" src="resources/jquery.cookie.js"></script>
     <script type="text/javascript" src="resources/underi18n.js"></script>
     <script type="text/javascript" src="resources/woodman.js"></script>
+    <script type="application/javascript" src="Doom.js"></script>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
@@ -26,15 +27,16 @@
     <script type="text/javascript" src="views/InputView.js"></script>
     <script type="text/javascript" src="views/DoomView.js"></script>
     <script type="text/javascript" src="views/ErrorView.js"></script>
-    <script type="text/javascript" src="views/PopupView.js"></script>
+
 
     <script type="text/javascript" src="models/SummonerModel.js"></script>
     <script type="text/javascript" src="models/DoomModel.js"></script>
     <script type="text/javascript" src="models/TeamModel.js"></script>
 
+    <script type="text/javascript" src="rooter/Router.js"></script>
+
     <!--<script type="text/javascript" src="helpers/RequestLimiter.js"></script>-->
     <script type="text/javascript" src="helpers/Properties.js"></script>
-    <script type="text/javascript" src="helpers/Router.js"></script>
     <script type="text/javascript" src="helpers/Colorize.js"></script>
     <script type="text/javascript" src="helpers/Table2csv.js"></script>
     <script type="text/javascript" src="helpers/Trimmer.js"></script>
@@ -50,21 +52,7 @@
     //handlebars templates/input.handlebars -f compiled/input.tpl.js
     woodman.load('console');
 
-    var doom = {};
-
-    doom.eventAgg = _.extend({}, Backbone.Events);
-    doom.doomModel = doom.doomModel || new DoomModel({eventAgg: doom.eventAgg});
-    doom.watchDogTime = 90000;
-    doom.dictionary = new Map();
-    doom.lang = doom.lang || 'en';
-    doom.exporter = new toCsv();
-    doom.colorize = new Colorize();
-    doom.statics = new Constants().init();
-    doom.logger = woodman.getLogger('index');
-    doom.router = new DocumentRouter(doom.doomModel, doom.eventAgg);
-    doom.en = $.ajax(window.location.origin + "/locale/en");
-    doom.ru = $.ajax(window.location.origin + "/locale/ru");
-    doom.lastPlayer = '';
+    doom.init();
 
     /** Callback to set language
      * @param {string} lang - language value */
@@ -74,7 +62,7 @@
     };
     /**Watchdog timer to prevent stuck on loading screen if some API call fail*/
     doom.watchDog = function watchDog() {
-        if (!doom.doomModel.get('doomRendered')) doom.eventAgg.trigger('error:api');
+        if (!doom.inst.doomModel.get('doomRendered')) doom.eventAgg.trigger('error:api');
     };
 
     $(document).ready(function () {
@@ -85,109 +73,18 @@
             console.log(eventName + ' was triggered!');
         });
 
-        /** summoner id collected
-         @event build:readyforteam*/
-        doom.eventAgg.on('build:readyforteam', function () {
-            $('#loading').show();
-            $('#content').hide();
-            setTimeout(doom.watchDog, doom.watchDogTime);
-            doom.doomModel.getCurrentGameData();
-        });
-
-        /** All teams doom are calculated, ready for show results
-         @event doom:calculated*/
-        doom.eventAgg.on('doom:calculated', function () {
-            $('#loading').hide();
-            $('#content').show();
-            doom.router.navigate('doom', {trigger: true});
-        });
-
-        /** Set color for the doom message
-         @event render:afterdoom*/
-        doom.eventAgg.on('render:afterdoom', function () {
-            doom.doomModel.set('doomRendered', true);
-            var color = doom.colorize.getColor(doom.doomModel.get('allyDoomPercentage'));
-            $('#judge').css('background', color);
-            doom.exporter.export(['#teams', '#players']);
-        });
-
-        /** give style to the selected summoner
-         @event render:afterpopup*/
-        doom.eventAgg.on('render:afterpopup', function (player) {
-            $('#popup').show();
-            var player = player.trim().replace(/\s/g, '').toLowerCase();
-            if (doom.lastPlayer.length != 0) $('#' + doom.lastPlayer).css('color', 'black');
-            $('#' + player).css('color', 'red');
-            doom.lastPlayer = player;
-        });
-
-        /** Inputs collected get the current game with players
-         @event input:getTeam*/
-        doom.eventAgg.on('input:getTeam', function () {
-            doom.doomModel.getInputs();
-        });
-
-        /** Inputs meet the formal requirements
-         @event build:inputsuccess */
-        doom.eventAgg.on('build:inputsuccess', function () {
-            doom.doomModel.getSummonerId();
-        });
-
-        /** Inputs doesnt meet the formal requirements
-         @event build:inputerror */
-        doom.eventAgg.on('build:inputerror', function () {
-            Backbone.history.loadUrl(Backbone.history.fragment);
-        });
-
-        /** Participants collected
-         @event build:teamsuccess */
-        doom.eventAgg.on('build:teamsuccess', function () {
-            doom.doomModel.startBuild();
-        });
-
-        /** Teams are built.
-         @event build:teamsready */
-        doom.eventAgg.on('build:teamsready', function () {
-            doom.doomModel.calculateDoom();
-        });
-
-        /** Data related to the players are collected.
-         @event build:fetched */
-        doom.eventAgg.on('build:fetched', function () {
-            doom.doomModel.buildTeams();
-        });
-
-        /** Onclick event, match me with retarda again
-         @event doom:again */
-        doom.eventAgg.on('doom:again', function () {
-            doom.router.navigate('inputs', {trigger: true});
-        });
-
-        /** Acknowledge general error
-         @event error:gohome */
-        doom.eventAgg.on('error:gohome', function () {
-            doom.router.navigate('inputs', {trigger: true});
-        });
-
         /** General error
          @event error:api */
         doom.eventAgg.on('error:api', function () {
             $('#loading').hide();
             $('#content').show();
-            doom.router.navigate('error', {trigger: true});
+            doom.inst.router.navigate('error', {trigger: true});
         });
 
-        /** navigate to player suppage to show popup
-         @event navigate */
-        doom.eventAgg.on('navigate', function (param) {
-            doom.router.navigate(param, {trigger: true});
-        });
-
-        /** THide popup
-         @event popup:hide */
-        doom.eventAgg.on('popup:hide', function () {
-            $('#popup').hide();
-            $('#' + doom.lastPlayer).css('color', 'black');
+        doom.eventAgg.on('error:gohome', function () {
+            $('#loading').hide();
+            $('#content').show();
+            doom.inst.router.navigate('input', {trigger: true});
         });
 
         /** Reload page upon language change
@@ -203,7 +100,7 @@
                     doom.dictionary.set('en', underi18n.MessageFactory(lang1[0]));
                     doom.dictionary.set('ru', underi18n.MessageFactory(lang2[0]));
                     Backbone.history.start();
-                    doom.router.navigate('inputs', {trigger: true});
+                    doom.inst.router.navigate('inputs', {trigger: true});
                 }).fail(
                 function () {
                     doom.logger.error('cannot load language files!');
