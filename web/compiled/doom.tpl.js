@@ -10,7 +10,7 @@ this["Handlebars"]["templates"]["web/templates/doom.handlebars"] = Handlebars.te
 
   return "                    <tr class=\"data\">\r\n                        <td id=\""
     + alias1((helpers.trim || (depth0 && depth0.trim) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.name : depth0),{"name":"trim","hash":{},"data":data}))
-    + "\" onclick=\"doom.eventAgg.trigger('navigate','/doom/"
+    + "\" onclick=\"doom.eventAgg.trigger('popup','"
     + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))
     + "')\">"
     + alias1(alias2((depth0 != null ? depth0.name : depth0), depth0))

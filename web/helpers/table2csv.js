@@ -60,7 +60,7 @@
             a.download = new Date().toISOString() + '.csv';
             a.href = generateReport(ids);
             a.className = "button";
-            $('#content').append(a);
+            return a;
         }
     };
 });
